@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Guldfeldt.View"
         mc:Ignorable="d"
-        Title="EmployeeList" Height="450" Width="800">
+        Title="EmployeeList" Height="620" Width="670" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="MouseOverBackground" TargetType="Button">
+            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid HorizontalAlignment="Left" Height="432" Margin="234,64,0,0" VerticalAlignment="Top" Width="398" Background="#FFEAEAEA">
+            <Label x:Name="EmployeeInformation_Label" Content="Medarbejder information" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" FontSize="16" Width="193"/>
+            <TextBox x:Name="FullName_TextBox" HorizontalAlignment="Center" Margin="0,33,0,0" TextWrapping="Wrap" Text="Fuldt navn" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="PhoneNumber_TextBox" HorizontalAlignment="Center" Margin="0,73,0,0" TextWrapping="Wrap" Text="Telefonnummer" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="Address_TextBox" HorizontalAlignment="Center" Margin="0,113,0,0" TextWrapping="Wrap" Text="Adresse" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="SalaryNumber_TextBox" HorizontalAlignment="Center" Margin="0,153,0,0" TextWrapping="Wrap" Text="Lønnummer" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="CurrentWorkplace_TextBox" HorizontalAlignment="Center" Margin="0,193,0,0" TextWrapping="Wrap" Text="Nuværende arbejdsplads" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="SocialSecurityNumber_TextBox" HorizontalAlignment="Center" Margin="0,232,0,0" TextWrapping="Wrap" Text="CPR-Nummer" VerticalContentAlignment="Center" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+
+            <CheckBox x:Name="Apprentice_CheckBox" Content="Lærling" HorizontalAlignment="Left" Margin="10,272,0,0" VerticalAlignment="Top" Height="20" Width="93" FontSize="14"/>
+            <CheckBox x:Name="Journeyman_CheckBox" Content="Svend" HorizontalAlignment="Left" Height="20" Margin="10,297,0,0" VerticalAlignment="Top" Width="93" FontSize="14"/>
+            <CheckBox x:Name="Mentor_Checkbox" Content="Mentor" HorizontalAlignment="Left" Height="20" Margin="295,272,0,0" VerticalAlignment="Top" Width="93" FontSize="14"/>
+            <ComboBox x:Name="ApprenticeList_ComboBox" HorizontalAlignment="Left" Margin="210,295,0,0" VerticalAlignment="Top" Width="178"/>
+            <Button Content="Se Noter" HorizontalAlignment="Left" Margin="10,395,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
+            <Button Content="Se Kalender" HorizontalAlignment="Left" Margin="294,395,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
+            <Button Content="Rediger" HorizontalAlignment="Left" Height="23" Margin="294,4,0,0" VerticalAlignment="Top" Width="94"/>
+        </Grid>
+
+        <ComboBox x:Name="PickList_ComboBox" HorizontalAlignment="Left" Margin="27,28,0,0" VerticalAlignment="Top" Width="178" Height="25"/>
+        <ComboBox x:Name="ChooseWorkplace_ComboBox" HorizontalAlignment="Left" Margin="234,28,0,0" VerticalAlignment="Top" Width="178" Height="25"/>
+
+        <Button x:Name="WorkplaceSchedule_Button" Content="Tidsplan" HorizontalAlignment="Left" Margin="453,28,0,0" VerticalAlignment="Top" Height="25" Width="72" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
+        <Button x:Name="CreateWorkplace_Button" Content="Opret" HorizontalAlignment="Left" Margin="560,28,0,0" VerticalAlignment="Top" Height="25" Width="72" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" Click="CreateWorkplace_Button_Click" BorderBrush="#FF5E5B5B"/>
+        <Button x:Name="AddEmployee_Button" Content="Tilføj Medarbejder" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="178" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
+
+        <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA"/>
+
+        <TextBox x:Name="ListFilter_TextBox" HorizontalAlignment="Left" Margin="27,64,0,0" TextWrapping="Wrap" Text="Søg" VerticalAlignment="Top" Width="178" Height="25" FontSize="14" Background="#FFEAEAEA"/>
+
     </Grid>
 </Window>

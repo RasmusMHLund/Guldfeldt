@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace Guldfeldt.Model
 {
-    internal class Workplace
+    public class Workplace
     {
+        public string Name { get; set; }
+        public string Address { get; set; }
+
+        public Workplace(string name, string address) 
+        {
+            this.Name = name;
+            this.Address = address;
+        }
     }
 }

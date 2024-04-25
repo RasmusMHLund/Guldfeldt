@@ -23,5 +23,17 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
         }
+
+        private void CreateWorkplace_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddWorkplace addWorkplace = new AddWorkplace();
+            addWorkplace.ShowDialog();
+        }
+
+        private void AddEmployee_Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddEmployee addEmployee = new AddEmployee();
+            addEmployee.ShowDialog();
+        }
     }
 }

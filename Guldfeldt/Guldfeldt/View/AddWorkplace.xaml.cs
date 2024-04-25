@@ -23,5 +23,10 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
         }
+
+        private void Cancel_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
