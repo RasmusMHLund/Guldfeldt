@@ -25,6 +25,5 @@ namespace Guldfeldt.Model
             this.PhoneNumber = phoneNumber;
             this.SalaryNumber = salaryNumber;
         }
-
     }
 }
