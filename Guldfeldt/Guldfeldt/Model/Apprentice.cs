@@ -9,14 +9,15 @@ namespace Guldfeldt.Model
 {
     public class Apprentice
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string SocialSecurityNumber { get; set; }
         public string Email {  get; set; }
         public int PhoneNumber { get; set; }
         public int SalaryNumber { get; set; }
 
-        public Apprentice(string name, DateTime dateOfBirth, string socialSecurityNumber, string email, int phoneNumber, int salaryNumber)
+        public Apprentice(string name, DateTime? dateOfBirth, string socialSecurityNumber, string email, int phoneNumber, int salaryNumber) 
         {
             this.Name = name;
             this.DateOfBirth = dateOfBirth;
@@ -24,6 +25,10 @@ namespace Guldfeldt.Model
             this.Email = email;
             this.PhoneNumber = phoneNumber;
             this.SalaryNumber = salaryNumber;
+        }    
+            public Apprentice(): this(null, null, null, null, 0, 0)
+        {
+
         }
     }
 }
