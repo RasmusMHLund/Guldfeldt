@@ -36,12 +36,12 @@ namespace Guldfeldt.Persistence
                 SqlCommand cmd = new SqlCommand("INSERT INTO APPRENTICE (Name, DateOfBirth, SocialSecurityNumber, Email, PhoneNumber, SalaryNumber)" +
                                                  "VALUES(@Name,@DateOfBirth,@SocialSecurityNumber,@Email,@PhoneNumber,@SalaryNumber)" +
                                                  "SELECT @@IDENTITY", con);
-                cmd.Parameters.Add("@Name", SqlDbType.DateTime2).Value = apprenticeToBeCreated.Name;
-                cmd.Parameters.Add("@DateOfBirth", SqlDbType.Int).Value = apprenticeToBeCreated.DateOfBirth;
-                cmd.Parameters.Add("@SocialSecurityNumber", SqlDbType.Int).Value = apprenticeToBeCreated.SocialSecurityNumber;
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = apprenticeToBeCreated.Name;
+                cmd.Parameters.Add("@DateOfBirth", SqlDbType.DateTime2).Value = apprenticeToBeCreated.DateOfBirth;
+                cmd.Parameters.Add("@SocialSecurityNumber", SqlDbType.NVarChar).Value = apprenticeToBeCreated.SocialSecurityNumber;
                 cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = apprenticeToBeCreated.Email;
                 cmd.Parameters.Add("@PhoneNumber", SqlDbType.Int).Value = apprenticeToBeCreated.PhoneNumber;
-                cmd.Parameters.Add("@SalaryNumber", SqlDbType.NVarChar).Value = apprenticeToBeCreated.SalaryNumber;
+                cmd.Parameters.Add("@SalaryNumber", SqlDbType.Int).Value = apprenticeToBeCreated.SalaryNumber;
                 apprenticeToBeCreated.Id = Convert.ToInt32(cmd.ExecuteScalar());
                 Apprentices.Add(apprenticeToBeCreated);
             }

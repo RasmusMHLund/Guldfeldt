@@ -8,6 +8,7 @@ namespace Guldfeldt.Model
 {
     public class Workplace
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
 
@@ -16,5 +17,6 @@ namespace Guldfeldt.Model
             this.Name = name;
             this.Address = address;
         }
+        public Workplace(): this(null, null) { }
     }
 }

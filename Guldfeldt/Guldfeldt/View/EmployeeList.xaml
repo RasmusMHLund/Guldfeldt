@@ -50,11 +50,13 @@
             <ComboBoxItem Name="item5" Content="Munkebjerg Kirke"/>
         </ComboBox>
 
-        <Button x:Name="WorkplaceSchedule_Button" Content="Tidsplan" HorizontalAlignment="Left" Margin="453,28,0,0" VerticalAlignment="Top" Height="25" Width="72" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
-        <Button x:Name="CreateWorkplace_Button" Content="Opret" HorizontalAlignment="Left" Margin="560,28,0,0" VerticalAlignment="Top" Height="25" Width="72" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" Click="CreateWorkplace_Button_Click" BorderBrush="#FF5E5B5B"/>
-        <Button x:Name="AddEmployee_Button" Content="Tilføj Medarbejder" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="178" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
-        <Button x:Name="EditWorkplace_Button" Content="Rediger" HorizontalAlignment="Left" Height="25" Margin="496,28,0,0" VerticalAlignment="Top" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
-        <Button x:Name="AddEmployee_Button" Content="Tilføj Medarbejder" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="178" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
+        <Button x:Name="WorkplaceSchedule_Button" Content="Tidsplan" HorizontalAlignment="Left" Margin="422,28,0,0" VerticalAlignment="Top" Height="25" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" RenderTransformOrigin="0.431,0.522"/>
+        <Button x:Name="CreateWorkplace_Button" Content="Opret" HorizontalAlignment="Left" Margin="567,28,0,0" VerticalAlignment="Top" Height="25" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" Click="CreateWorkplace_Button_Click" BorderBrush="#FF5E5B5B"/>
+        <Button x:Name="EditWorkplace_Button" Content="Rediger" HorizontalAlignment="Left" Height="25" Margin="495,28,0,0" VerticalAlignment="Top" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
+
+        <Button x:Name="AddEmployee_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
+        <Button x:Name="DeleteEmployee_Button" Content="Slet" HorizontalAlignment="Left" Margin="120,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
+
         <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA"/>
 
         <TextBox x:Name="ListFilter_TextBox" HorizontalAlignment="Left" Margin="27,64,0,0" TextWrapping="Wrap" Text="Søg" VerticalAlignment="Top" Width="178" Height="25" FontSize="14" Background="#FFEAEAEA"/>
