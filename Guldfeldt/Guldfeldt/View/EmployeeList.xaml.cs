@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,11 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class EmployeeList : Window
     {
+        MainViewModel mvm = new MainViewModel();
         public EmployeeList()
         {
             InitializeComponent();
+            DataContext = mvm;
         }
 
         private void CreateWorkplace_Button_Click(object sender, RoutedEventArgs e)

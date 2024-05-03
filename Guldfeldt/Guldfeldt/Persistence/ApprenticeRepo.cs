@@ -27,7 +27,6 @@ namespace Guldfeldt.Persistence
 
         }
 
-
         public void Create(Apprentice apprenticeToBeCreated)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))

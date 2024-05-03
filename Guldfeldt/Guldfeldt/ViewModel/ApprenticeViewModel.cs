@@ -3,10 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Guldfeldt.Model;
 
 namespace Guldfeldt.ViewModel
 {
-    internal class ApprenticeViewModel
+    public class ApprenticeViewModel
     {
+        public string Name { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string SocialSecurityNumber { get; set; }
+        public string Email { get; set; }
+        public int PhoneNumber { get; set; }
+        public int SalaryNumber { get; set; }
+
+        public ApprenticeViewModel(Apprentice apprentice)
+        {
+            Name = apprentice.Name;
+            DateOfBirth = apprentice.DateOfBirth;
+            SocialSecurityNumber = apprentice.SocialSecurityNumber;
+            Email = apprentice.Email;
+            PhoneNumber = apprentice.PhoneNumber;
+            SalaryNumber = apprentice.SalaryNumber;
+        }
     }
 }
