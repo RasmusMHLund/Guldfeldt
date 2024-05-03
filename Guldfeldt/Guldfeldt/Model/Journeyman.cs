@@ -14,10 +14,10 @@ namespace Guldfeldt.Model
         public string SocialSecurityNumber { get; set; }
         public string Email {  get; set; }
         public int PhoneNumber { get; set; }
-        public bool MentorStatus { get; set; }
+        public bool? MentorStatus { get; set; }
         public int SalaryNumber { get; set; }
 
-        public Journeyman(string name, DateTime? dateOfBirth, string socialSecurityNumber, string email, int phoneNumber, bool mentorStatus, int salaryNumber ) 
+        public Journeyman(string name, DateTime? dateOfBirth, string socialSecurityNumber, string email, int phoneNumber, bool? mentorStatus, int salaryNumber ) 
         { 
             Name = name;
             DateOfBirth = dateOfBirth;

@@ -31,16 +31,16 @@ namespace Guldfeldt.Persistence
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO JOURNEYMAN (Name, DateOfBirth, SocialSecurityNumber, Email, PhoneNumber, MentorStatus, SalaryNumber)" +
-                                                 "VALUES(@Name,@DateOfBirth,@SocialSecurityNumber,@Email,@PhoneNumber,@MentorStatus,@SalaryNumber)" +
+                SqlCommand cmd = new SqlCommand("INSERT INTO JOURNEYMAN (Name, DateOfBirth, SocialSecurityNumber, Email, PhoneNumber, SalaryNumber, MentorStatus)" +
+                                                 "VALUES(@Name,@DateOfBirth,@SocialSecurityNumber,@Email,@PhoneNumber,@SalaryNumber,@MentorStatus)" +
                                                  "SELECT @@IDENTITY", con);
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = journeymanToBeCreated.Name;
                 cmd.Parameters.Add("@DateOfBirth", SqlDbType.DateTime2).Value = journeymanToBeCreated.DateOfBirth;
                 cmd.Parameters.Add("@SocialSecurityNumber", SqlDbType.NVarChar).Value = journeymanToBeCreated.SocialSecurityNumber;
                 cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = journeymanToBeCreated.Email;
                 cmd.Parameters.Add("@PhoneNumber", SqlDbType.Int).Value = journeymanToBeCreated.PhoneNumber;
-                cmd.Parameters.Add("@MentorStatus", SqlDbType.Bit).Value = journeymanToBeCreated.MentorStatus;
                 cmd.Parameters.Add("@SalaryNumber", SqlDbType.Int).Value = journeymanToBeCreated.SalaryNumber;
+                cmd.Parameters.Add("@MentorStatus", SqlDbType.Bit).Value = journeymanToBeCreated.MentorStatus;
                 journeymanToBeCreated.Id = Convert.ToInt32(cmd.ExecuteScalar());
                 Journeymen.Add(journeymanToBeCreated);
             }
@@ -52,7 +52,7 @@ namespace Guldfeldt.Persistence
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT Name, DateOfBirth, SocialSecurityNumber, Email, PhoneNumber, MentorStatus, SalaryNumber FROM JOURNEYMAN", con);
+                SqlCommand cmd = new SqlCommand("SELECT Name, DateOfBirth, SocialSecurityNumber, Email, PhoneNumber, SalaryNumber, MentorStatus FROM JOURNEYMAN", con);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -66,8 +66,9 @@ namespace Guldfeldt.Persistence
                             SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
                             Email = dr["Email"].ToString(),
                             PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
+                            SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
                             MentorStatus = bool.Parse(dr["MentorStatus"].ToString()),
-                            SalaryNumber = int.Parse(dr["SalaryNumber"].ToString())
+
                         };
                         Journeymen.Add(journeyman);
                     }
@@ -81,7 +82,7 @@ namespace Guldfeldt.Persistence
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("UPDATE JOURNEYMAN SET Name = @Name, DateOfBirth = @DateOfBirth, SocialSecurityNumber = @SocialSecurityNumber, Email = @Email, PhoneNumber = @PhoneNumber, MentorStatus = @MentorStatus, SalaryNumber = @SalaryNumber WHERE Id = @Id", con);
+                SqlCommand cmd = new SqlCommand("UPDATE JOURNEYMAN SET Name = @Name, DateOfBirth = @DateOfBirth, SocialSecurityNumber = @SocialSecurityNumber, Email = @Email, PhoneNumber = @PhoneNumber, SalaryNumber = @SalaryNumber, MentorStatus = @MentorStatus WHERE Id = @Id", con);
                 cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = journeymanToBeUpdated.Id;
                 cmd.ExecuteNonQuery();
             }

@@ -15,6 +15,7 @@ namespace Guldfeldt.ViewModel
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public int SalaryNumber { get; set; }
+        public bool? MentorStatus { get; set; }
 
         public JourneymanViewModel(Journeyman journeyman)
         {
@@ -24,6 +25,7 @@ namespace Guldfeldt.ViewModel
             Email = journeyman.Email;
             PhoneNumber = journeyman.PhoneNumber;
             SalaryNumber = journeyman.SalaryNumber;
+            MentorStatus = journeyman.MentorStatus;
         }
     }
 }

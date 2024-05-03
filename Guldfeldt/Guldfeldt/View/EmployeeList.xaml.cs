@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Guldfeldt.View.Notes;
 
 namespace Guldfeldt.View
 {
@@ -20,11 +21,11 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class EmployeeList : Window
     {
-        MainViewModel mvm = new MainViewModel();
+        
         public EmployeeList()
         {
             InitializeComponent();
-            DataContext = mvm;
+           
         }
 
         private void CreateWorkplace_Button_Click(object sender, RoutedEventArgs e)
@@ -37,6 +38,12 @@ namespace Guldfeldt.View
         {
             AddEmployee addEmployee = new AddEmployee();
             addEmployee.ShowDialog();
+        }
+
+        private void NoteList_Button_Click(object sender, RoutedEventArgs e)
+        {
+            NoteList noteList = new NoteList();
+            noteList.ShowDialog();
         }
     }
 }

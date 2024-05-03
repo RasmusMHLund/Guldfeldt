@@ -29,12 +29,12 @@
             <CheckBox x:Name="Journeyman_CheckBox" Content="Svend" HorizontalAlignment="Left" Height="20" Margin="10,297,0,0" VerticalAlignment="Top" Width="93" FontSize="14"/>
             <CheckBox x:Name="Mentor_Checkbox" Content="Mentor" HorizontalAlignment="Left" Height="20" Margin="295,272,0,0" VerticalAlignment="Top" Width="93" FontSize="14"/>
             <ComboBox x:Name="ApprenticeList_ComboBox" HorizontalAlignment="Left" Margin="210,295,0,0" VerticalAlignment="Top" Width="178"/>
-            <Button Content="Se Noter" HorizontalAlignment="Left" Margin="10,395,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
-            <Button Content="Se Kalender" HorizontalAlignment="Left" Margin="294,395,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
-            <Button Content="Rediger" HorizontalAlignment="Left" Height="23" Margin="294,4,0,0" VerticalAlignment="Top" Width="94"/>
+            <Button x:Name="NoteList_Button" Content="Se Noter" HorizontalAlignment="Left" Margin="10,395,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B" Click="NoteList_Button_Click"/>
+            <Button x:Name="EmployeeCalender_Button" Content="Se Kalender" HorizontalAlignment="Left" Margin="294,395,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
+            <Button x:Name="EditEmployeeInformation_Button" Content="Rediger" HorizontalAlignment="Left" Height="23" Margin="294,4,0,0" VerticalAlignment="Top" Width="94"/>
         </Grid>
 
-        <ComboBox x:Name="PickList_ComboBox" HorizontalAlignment="Left" Margin="27,28,0,0" VerticalAlignment="Top" Width="178" Height="25">
+        <ComboBox x:Name="PickList_ComboBox" HorizontalAlignment="Left" Margin="27,28,0,0" VerticalAlignment="Top" Width="178" Height="25" SelectedIndex="0" FontSize="14">
             <ComboBoxItem Name="_item1" Content="Alle medarbejdere"/>
             <ComboBoxItem Name="_item2" Content="Alle lærlinge"/>
             <ComboBoxItem Name="_item3" Content="Alle svende"/>
@@ -42,7 +42,8 @@
             <ComboBoxItem Name="_item5" Content="Arbejdsplads"/>
         </ComboBox>
 
-        <ComboBox x:Name="ChooseWorkplace_ComboBox" HorizontalAlignment="Left" Margin="234,28,0,0" VerticalAlignment="Top" Width="178" Height="25">
+        <ComboBox x:Name="ChooseWorkplace_ComboBox" HorizontalAlignment="Left" Margin="234,28,0,0" VerticalAlignment="Top" Width="178" Height="25" SelectedIndex="0" FontSize="14">
+            <ComboBoxItem Visibility="Collapsed" Content="Vælg arbejdsplads"/>
             <ComboBoxItem Name="item1" Content="Tigergården"/>
             <ComboBoxItem Name="item2" Content="PFA Kollegiet"/>
             <ComboBoxItem Name="item3" Content="Strandhøjen"/>
@@ -57,9 +58,9 @@
         <Button x:Name="AddEmployee_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
         <Button x:Name="DeleteEmployee_Button" Content="Slet" HorizontalAlignment="Left" Margin="120,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
 
-        <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA"/>
+        <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA" FontSize="14"/>
 
-        <TextBox x:Name="ListFilter_TextBox" HorizontalAlignment="Left" Margin="27,64,0,0" TextWrapping="Wrap" Text="Søg" VerticalAlignment="Top" Width="178" Height="25" FontSize="14" Background="#FFEAEAEA"/>
+        <TextBox x:Name="ListFilter_TextBox" HorizontalAlignment="Left" Margin="27,64,0,0" TextWrapping="Wrap" Text="Søg..." VerticalAlignment="Top" Width="178" Height="25" FontSize="14" Background="#FFEAEAEA" VerticalContentAlignment="Center"/>
 
     </Grid>
 </Window>
