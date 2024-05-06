@@ -8,14 +8,12 @@ namespace Guldfeldt.ViewModel
 {
     internal class MainViewModel
     {
-        public ApprenticeViewModel avm;
-        public JourneymanViewModel jvm;
+        public EmployeeViewModel evm;
         public WorkplaceViewModel wvm;
         public NoteViewModel nvm;
-        public MainViewModel(ApprenticeViewModel avm, JourneymanViewModel jvm, WorkplaceViewModel wvm, NoteViewModel nvm)
+        public MainViewModel(EmployeeViewModel evm, WorkplaceViewModel wvm, NoteViewModel nvm)
         {
-            this.avm = avm;
-            this.jvm = jvm;
+            this.evm = evm;
             this.wvm = wvm;
             this.nvm = nvm;
         }

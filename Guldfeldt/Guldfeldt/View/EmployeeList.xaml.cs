@@ -26,11 +26,13 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class EmployeeList : Window
     {
-
+        private EmployeeViewModel evm;
         SqlConnection con = new SqlConnection("Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True");
         public EmployeeList()
         {
             InitializeComponent();
+            evm = new EmployeeViewModel();
+            DataContext = evm;
 
         }
 
@@ -54,57 +56,29 @@ namespace Guldfeldt.View
 
         private void PickList_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             if (PickList_ComboBox.SelectedItem != null)
             {
-                EmployeeList_ListBox.Items.Clear();
-
-                using (SqlConnection con = new SqlConnection("Data Source=10.56.8.35;Initial Catalog=DB_2024_72;Persist Security Info=True;User ID=STUDENT_2024_72;Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True"))
+                switch (PickList_ComboBox.SelectedItem)
                 {
-                    con.Open();
-
-                    string query = "";
-                    switch (PickList_ComboBox.SelectedItem)
-                    {
-                        case ComboBoxItem item1 when item1.Name == "_item1":
-                            query = "SELECT Name FROM APPRENTICE UNION SELECT Name FROM JOURNEYMAN";
-                            DisableWorkplaceControls();
-                            break;
-                        case ComboBoxItem item2 when item2.Name == "_item2":
-                            query = "SELECT * FROM APPRENTICE";
-                            DisableWorkplaceControls();
-                            break;
-                        case ComboBoxItem item3 when item3.Name == "_item3":
-                            query = "SELECT * FROM JOURNEYMAN";
-                            DisableWorkplaceControls();
-                            break;
-                        case ComboBoxItem item4 when item4.Name == "_item4":
-                            query = "SELECT * FROM JOURNEYMAN WHERE MentorStatus = 'True'";
-                            DisableWorkplaceControls();
-                            break;
-                        case ComboBoxItem item5 when item5.Name == "_item5":
-                            query = "SELECT * FROM APPRENTICE";
-                            EnableWorkplaceControls();
-
-                            break;
-                    }
-                    if (!string.IsNullOrEmpty(query))
-                    {
-                        using (con) { 
-                        using (SqlCommand cmd = new SqlCommand(query, con))
-                        {
-                            using (SqlDataReader dr = cmd.ExecuteReader())
-                            {
-                                while (dr.Read())
-                                {
-                                        EmployeeList_ListBox.Items.Add(dr["Name"]);
-                                }
-                            }
-                        }
-                    }
-                    }
+                    case "Alle medarbejdere":
+                        DisableWorkplaceControls();
+                        break;
+                    case "Alle lærlinge":
+                        DisableWorkplaceControls();
+                        break;
+                    case "Alle svende":
+                        DisableWorkplaceControls();
+                        break;
+                    case "Alle mentorer":
+                        DisableWorkplaceControls();
+                        break;
+                    case "Arbejdsplads":
+                        EnableWorkplaceControls();
+                        break;
                 }
             }
-        }
+        }  
         private void EditEmployeeInformation_Button_Click(object sender, RoutedEventArgs e)
         {
             FullName_TextBox.IsEnabled = true;
@@ -115,6 +89,12 @@ namespace Guldfeldt.View
             SocialSecurityNumber_TextBox.IsEnabled = true;
             Apprentice_CheckBox.IsEnabled = true;
             Journeyman_CheckBox.IsEnabled = true;
+
+            if (Journeyman_CheckBox.IsEnabled)
+            {
+                Mentor_Checkbox.IsEnabled = true;
+                ApprenticeList_ComboBox.IsEnabled = true;
+            }
 
             Save_Button.IsEnabled = true;
             Save_Button.Visibility = Visibility.Visible;
@@ -143,15 +123,22 @@ namespace Guldfeldt.View
             EditWorkplace_Button.Visibility = Visibility.Visible;
         }
 
+        private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            
+            Mentor_Checkbox.Visibility = Visibility.Hidden;
+            ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
+        }
         private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            Mentor_Checkbox.IsEnabled = true;
+           
             Mentor_Checkbox.Visibility = Visibility.Visible;
+            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
         }
 
         private void Mentor_Checkbox_Checked(object sender, RoutedEventArgs e)
         {
-            ApprenticeList_ComboBox.IsEnabled = true;
+            
             ApprenticeList_ComboBox.Visibility = Visibility.Visible;
         }
 
@@ -166,6 +153,9 @@ namespace Guldfeldt.View
             Apprentice_CheckBox.IsEnabled = false;
             Journeyman_CheckBox.IsEnabled = false;
 
+            Mentor_Checkbox.IsEnabled = false;
+            ApprenticeList_ComboBox.IsEnabled = false;
+
             Save_Button.IsEnabled = false;
             Save_Button.Visibility = Visibility.Hidden;
 
@@ -174,6 +164,37 @@ namespace Guldfeldt.View
 
         private void EmployeeList_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //var listBox = sender as ListBox;
+            //var selectedEmployeeName = listBox.SelectedItem as string;
+
+            //if (selectedEmployeeName != null)
+            //{
+            //    using (SqlConnection con = new SqlConnection("Data Source=10.56.8.35;Initial Catalog=DB_2024_72;Persist Security Info=True;User ID=STUDENT_2024_72;Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True"))
+            //    {
+            //        con.Open();
+            //        string query = $"SELECT * FROM EMPLOYEE WHERE FullName = '{selectedEmployeeName}'";
+            //        using (SqlCommand cmd = new SqlCommand(query, con))
+            //        {
+            //            using (SqlDataReader dr = cmd.ExecuteReader())
+            //            {
+            //                if (dr.Read())
+            //                {
+            //                    FullName_TextBox.Text = dr["FullName"].ToString();
+            //                    PhoneNumber_TextBox.Text = dr["PhoneNumber"].ToString();
+            //                    Email_TextBox.Text = dr["Email"].ToString();
+            //                    SalaryNumber_TextBox.Text = dr["SalaryNumber"].ToString();
+            //                    CurrentWorkplace_TextBox.Text = dr["CurrentWorkplace"].ToString();
+            //                    SocialSecurityNumber_TextBox.Text = dr["SocialSecurityNumber"].ToString();
+            //                    Apprentice_CheckBox.IsChecked = (bool)dr["IsApprentice"];
+            //                    Journeyman_CheckBox.IsChecked = (bool)dr["IsJourneyman"];
+            //                    Mentor_Checkbox.IsChecked = (bool)dr["IsMentor"];
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
+
     }
-}
+    }
+

@@ -21,11 +21,8 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class AddEmployee : Window
     {
-        ApprenticeViewModel avm;    
-        ApprenticeRepo apprenticeRepo = new ApprenticeRepo();
-
-        JourneymanViewModel jvm;
-        JourneymanRepo journeymanRepo = new JourneymanRepo();
+        EmployeeViewModel evm;    
+        EmployeeRepo employeeRepo = new EmployeeRepo();
 
         WorkplaceViewModel wvm;
         WorkplaceRepo workplaceRepo = new WorkplaceRepo();

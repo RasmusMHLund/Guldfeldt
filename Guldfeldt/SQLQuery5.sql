@@ -1,0 +1,2 @@
+﻿INSERT INTO EMPLOYEE (SalaryNumber,FullName,PhoneNumber,Email,CurrentWorkplace,SocialSecurityNumber,IsApprentice,IsJourneyman,IsMentor)
+VALUES ('1','Patrick Hassø','21242412','patrickmail@mail.dk','UCL','220799-9999','False','True','True')
