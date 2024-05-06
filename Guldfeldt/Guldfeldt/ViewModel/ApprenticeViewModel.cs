@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Guldfeldt.Model;
+using Guldfeldt.Persistence;
 
 namespace Guldfeldt.ViewModel
 {
     public class ApprenticeViewModel
     {
+        ApprenticeRepo apprenticeRepo = new ApprenticeRepo();
         public string Name { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string SocialSecurityNumber { get; set; }

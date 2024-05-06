@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Guldfeldt.Persistence;
+using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +21,58 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class AddEmployee : Window
     {
+        ApprenticeViewModel avm;    
+        ApprenticeRepo apprenticeRepo = new ApprenticeRepo();
+
+        JourneymanViewModel jvm;
+        JourneymanRepo journeymanRepo = new JourneymanRepo();
+
+        WorkplaceViewModel wvm;
+        WorkplaceRepo workplaceRepo = new WorkplaceRepo();
+
         public AddEmployee()
         {
             InitializeComponent();
+            
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Apprentice_CheckBox.IsChecked == true)
+            {
+                avm.Name = FullName_TextBox.Text;
+                avm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
+                avm.Email = Email_TextBox.Text;
+                avm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
+                avm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
+
+
+                apprenticeRepo.Create(apprentice);
+            }
+            else if (Journeyman_CheckBox.IsChecked == true)
+            {
+                jvm.Name = FullName_TextBox.Text;
+                jvm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
+                jvm.Email = Email_TextBox.Text;
+                jvm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
+                jvm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
+                jvm.MentorStatus = Mentor_Checkbox.IsChecked;
+
+                journeymanRepo.Create(journeyman);
+            }
+            else if ((Apprentice_CheckBox.IsChecked & Journeyman_CheckBox.IsChecked) == false)
+            {
+                try
+                {
+                    MessageBox.Show("Vælg medarbejder status");
+                }
+                catch { }
+            }
         }
     }
 }

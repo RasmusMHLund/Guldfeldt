@@ -34,7 +34,7 @@
             <Button x:Name="EditEmployeeInformation_Button" Content="Rediger" HorizontalAlignment="Left" Height="23" Margin="294,4,0,0" VerticalAlignment="Top" Width="94"/>
         </Grid>
 
-        <ComboBox x:Name="PickList_ComboBox" HorizontalAlignment="Left" Margin="27,28,0,0" VerticalAlignment="Top" Width="178" Height="25" SelectedIndex="0" FontSize="14">
+        <ComboBox x:Name="PickList_ComboBox" HorizontalAlignment="Left" Margin="27,28,0,0" VerticalAlignment="Top" Width="178" Height="25" SelectedIndex="0" FontSize="14" SelectionChanged="PickList_ComboBox_SelectionChanged"  >
             <ComboBoxItem Name="_item1" Content="Alle medarbejdere"/>
             <ComboBoxItem Name="_item2" Content="Alle lærlinge"/>
             <ComboBoxItem Name="_item3" Content="Alle svende"/>
@@ -58,7 +58,7 @@
         <Button x:Name="AddEmployee_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
         <Button x:Name="DeleteEmployee_Button" Content="Slet" HorizontalAlignment="Left" Margin="120,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
 
-        <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA" FontSize="14"/>
+        <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA" FontSize="14" SelectionChanged="EmployeeList_ListBox_SelectionChanged" />
 
         <TextBox x:Name="ListFilter_TextBox" HorizontalAlignment="Left" Margin="27,64,0,0" TextWrapping="Wrap" Text="Søg..." VerticalAlignment="Top" Width="178" Height="25" FontSize="14" Background="#FFEAEAEA" VerticalContentAlignment="Center"/>
 

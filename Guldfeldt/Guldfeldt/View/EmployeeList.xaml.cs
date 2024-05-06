@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Data.SqlClient;
 using Guldfeldt.View.Notes;
 
 namespace Guldfeldt.View
@@ -21,11 +22,14 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class EmployeeList : Window
     {
-        
+        SqlConnection con = new SqlConnection("Data Source=10.56.8.35;Persist Security Info=True;User ID=STUDENT_2024_72;Password=OPENDB_72;Trust Server Certificate=True");
+        SqlCommand cmd;
+        SqlDataReader dr;
+
         public EmployeeList()
         {
             InitializeComponent();
-           
+          
         }
 
         private void CreateWorkplace_Button_Click(object sender, RoutedEventArgs e)
@@ -45,5 +49,57 @@ namespace Guldfeldt.View
             NoteList noteList = new NoteList();
             noteList.ShowDialog();
         }
+
+        private void PickList_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (apprentices)
+            {
+                cmd = new SqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT * FROM APPRENTICE";
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    EmployeeList_ListBox.Items.Add(dr[Name]);
+                }
+            } else if (all employees) //mangler linking table mellem lærling og svend
+             {
+                cmd = new SqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT * FROM APPRENTICEJOURNEYMAN";
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    EmployeeList_ListBox.Items.Add(dr[Name]);
+                }
+            } else if (journeymen)
+            {
+                cmd = new SqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT * FROM JOURNEYMAN";
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    EmployeeList_ListBox.Items.Add(dr[Name]);
+                }
+            }
+            else if (workplace) //mangler linking table til lærling og svend
+            {
+                cmd = new SqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandText = "SELECT * FROM WORKPLACE";
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    EmployeeList_ListBox.Items.Add(dr[Name]);
+                }
+            }
+        }
+
+    
     }
 }

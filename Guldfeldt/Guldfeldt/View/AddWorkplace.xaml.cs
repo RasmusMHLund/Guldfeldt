@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Guldfeldt.Persistence;
+using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +21,24 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class AddWorkplace : Window
     {
+        WorkplaceViewModel wvm;
         public AddWorkplace()
         {
             InitializeComponent();
+            DataContext = wvm;
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+          
+          wvm.Name = WorkplaceName_TextBox.Text;
+          wvm.Address = WorkplaceAddress_TextBox.Text;
+
         }
     }
 }
