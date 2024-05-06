@@ -43,36 +43,36 @@ namespace Guldfeldt.View
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Apprentice_CheckBox.IsChecked == true)
-            {
-                avm.Name = FullName_TextBox.Text;
-                avm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
-                avm.Email = Email_TextBox.Text;
-                avm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
-                avm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
+            //if (Apprentice_CheckBox.IsChecked == true)
+            //{
+            //    avm.Name = FullName_TextBox.Text;
+            //    avm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
+            //    avm.Email = Email_TextBox.Text;
+            //    avm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
+            //    avm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
 
 
-                apprenticeRepo.Create(apprentice);
-            }
-            else if (Journeyman_CheckBox.IsChecked == true)
-            {
-                jvm.Name = FullName_TextBox.Text;
-                jvm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
-                jvm.Email = Email_TextBox.Text;
-                jvm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
-                jvm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
-                jvm.MentorStatus = Mentor_Checkbox.IsChecked;
+            //    apprenticeRepo.Create(apprentice);
+            //}
+            //else if (Journeyman_CheckBox.IsChecked == true)
+            //{
+            //    jvm.Name = FullName_TextBox.Text;
+            //    jvm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
+            //    jvm.Email = Email_TextBox.Text;
+            //    jvm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
+            //    jvm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
+            //    jvm.MentorStatus = Mentor_Checkbox.IsChecked;
 
-                journeymanRepo.Create(journeyman);
-            }
-            else if ((Apprentice_CheckBox.IsChecked & Journeyman_CheckBox.IsChecked) == false)
-            {
-                try
-                {
-                    MessageBox.Show("Vælg medarbejder status");
-                }
-                catch { }
-            }
+            //    journeymanRepo.Create(journeyman);
+            //}
+            //else if ((Apprentice_CheckBox.IsChecked & Journeyman_CheckBox.IsChecked) == false)
+            //{
+            //    try
+            //    {
+            //        MessageBox.Show("Vælg medarbejder status");
+            //    }
+            //    catch { }
+            //}
         }
     }
 }
