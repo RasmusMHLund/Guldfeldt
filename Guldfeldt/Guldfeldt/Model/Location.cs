@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace Guldfeldt.Model
 {
-    public class Workplace
+    public class Location
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
+        public bool IsConstructionSite { get; set; }
+        public bool IsSchool { get; set; }
 
-        public Workplace(string name, string address) 
+        public Location(string name, string address) 
         {
             this.Name = name;
             this.Address = address;
         }
-        public Workplace(): this(null, null) { }
+        public Location(): this(null, null) { }
     }
 }

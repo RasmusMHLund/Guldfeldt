@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Guldfeldt.Persistence;
+using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +17,11 @@ using System.Windows.Shapes;
 namespace Guldfeldt.View
 {
     /// <summary>
-    /// Interaction logic for EditWorkplace.xaml
+    /// Interaction logic for AddWorkplace.xaml
     /// </summary>
-    public partial class EditWorkplace : Window
+    public partial class AddLocation : Window
     {
-        public EditWorkplace()
+        public AddLocation()
         {
             InitializeComponent();
         }
@@ -27,6 +29,12 @@ namespace Guldfeldt.View
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+         
+
         }
     }
 }

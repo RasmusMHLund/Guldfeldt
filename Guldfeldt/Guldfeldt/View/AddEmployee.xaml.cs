@@ -21,12 +21,6 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class AddEmployee : Window
     {
-        EmployeeViewModel evm;    
-        EmployeeRepo employeeRepo = new EmployeeRepo();
-
-        WorkplaceViewModel wvm;
-        WorkplaceRepo workplaceRepo = new WorkplaceRepo();
-
         public AddEmployee()
         {
             InitializeComponent();

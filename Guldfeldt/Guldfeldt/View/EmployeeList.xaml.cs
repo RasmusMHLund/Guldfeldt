@@ -21,25 +21,21 @@ using System.Drawing;
 
 namespace Guldfeldt.View
 {
-    /// <summary>
-    /// Interaction logic for EmployeeList.xaml
-    /// </summary>
     public partial class EmployeeList : Window
     {
-        private EmployeeViewModel evm;
-        SqlConnection con = new SqlConnection("Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True");
+        MainViewModel mvm = new MainViewModel();
+        //SqlConnection con = new SqlConnection("Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True");
+        
         public EmployeeList()
         {
             InitializeComponent();
-            evm = new EmployeeViewModel();
-            DataContext = evm;
-
+            DataContext = mvm;
         }
 
-        private void CreateWorkplace_Button_Click(object sender, RoutedEventArgs e)
+        private void CreateLocation_Button_Click(object sender, RoutedEventArgs e)
         {
-            AddWorkplace addWorkplace = new AddWorkplace();
-            addWorkplace.ShowDialog();
+            AddLocation addLocation = new AddLocation();
+            addLocation.ShowDialog();
         }
 
         private void AddEmployee_Button_Click(object sender, RoutedEventArgs e)
@@ -54,6 +50,11 @@ namespace Guldfeldt.View
             noteList.ShowDialog();
         }
 
+        private void EditLocation_Button_Click(object sender, RoutedEventArgs e)
+        {
+            EditLocation editLocation = new EditLocation();
+            editLocation.ShowDialog();
+        }
         private void PickList_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -102,25 +103,25 @@ namespace Guldfeldt.View
         }
         private void DisableWorkplaceControls()
         {
-            ChooseWorkplace_ComboBox.IsEnabled = false;
-            WorkplaceSchedule_Button.IsEnabled = false;
-            CreateWorkplace_Button.IsEnabled = false;
-            EditWorkplace_Button.IsEnabled = false;
-            ChooseWorkplace_ComboBox.Visibility = Visibility.Collapsed;
-            WorkplaceSchedule_Button.Visibility = Visibility.Collapsed;
-            CreateWorkplace_Button.Visibility = Visibility.Collapsed;
-            EditWorkplace_Button.Visibility = Visibility.Collapsed;
+            ChooseLocation_ComboBox.IsEnabled = false;
+            LocationSchedule_Button.IsEnabled = false;
+            CreateLocation_Button.IsEnabled = false;
+            EditLocation_Button.IsEnabled = false;
+            ChooseLocation_ComboBox.Visibility = Visibility.Collapsed;
+            LocationSchedule_Button.Visibility = Visibility.Collapsed;
+            CreateLocation_Button.Visibility = Visibility.Collapsed;
+            EditLocation_Button.Visibility = Visibility.Collapsed;
         }
         private void EnableWorkplaceControls()
         {
-            ChooseWorkplace_ComboBox.IsEnabled = true;
-            WorkplaceSchedule_Button.IsEnabled = true;
-            CreateWorkplace_Button.IsEnabled = true;
-            EditWorkplace_Button.IsEnabled = true;
-            ChooseWorkplace_ComboBox.Visibility = Visibility.Visible;
-            WorkplaceSchedule_Button.Visibility = Visibility.Visible;
-            CreateWorkplace_Button.Visibility = Visibility.Visible;
-            EditWorkplace_Button.Visibility = Visibility.Visible;
+            ChooseLocation_ComboBox.IsEnabled = true;
+            LocationSchedule_Button.IsEnabled = true;
+            CreateLocation_Button.IsEnabled = true;
+            EditLocation_Button.IsEnabled = true;
+            ChooseLocation_ComboBox.Visibility = Visibility.Visible;
+            LocationSchedule_Button.Visibility = Visibility.Visible;
+            CreateLocation_Button.Visibility = Visibility.Visible;
+            EditLocation_Button.Visibility = Visibility.Visible;
         }
 
         private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
@@ -159,42 +160,12 @@ namespace Guldfeldt.View
             Save_Button.IsEnabled = false;
             Save_Button.Visibility = Visibility.Hidden;
 
-            MessageBox.Show("Ændring gemt.");
+            MessageBox.Show(" Ændring gemt. ");
         }
 
         private void EmployeeList_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var listBox = sender as ListBox;
-            //var selectedEmployeeName = listBox.SelectedItem as string;
-
-            //if (selectedEmployeeName != null)
-            //{
-            //    using (SqlConnection con = new SqlConnection("Data Source=10.56.8.35;Initial Catalog=DB_2024_72;Persist Security Info=True;User ID=STUDENT_2024_72;Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True"))
-            //    {
-            //        con.Open();
-            //        string query = $"SELECT * FROM EMPLOYEE WHERE FullName = '{selectedEmployeeName}'";
-            //        using (SqlCommand cmd = new SqlCommand(query, con))
-            //        {
-            //            using (SqlDataReader dr = cmd.ExecuteReader())
-            //            {
-            //                if (dr.Read())
-            //                {
-            //                    FullName_TextBox.Text = dr["FullName"].ToString();
-            //                    PhoneNumber_TextBox.Text = dr["PhoneNumber"].ToString();
-            //                    Email_TextBox.Text = dr["Email"].ToString();
-            //                    SalaryNumber_TextBox.Text = dr["SalaryNumber"].ToString();
-            //                    CurrentWorkplace_TextBox.Text = dr["CurrentWorkplace"].ToString();
-            //                    SocialSecurityNumber_TextBox.Text = dr["SocialSecurityNumber"].ToString();
-            //                    Apprentice_CheckBox.IsChecked = (bool)dr["IsApprentice"];
-            //                    Journeyman_CheckBox.IsChecked = (bool)dr["IsJourneyman"];
-            //                    Mentor_Checkbox.IsChecked = (bool)dr["IsMentor"];
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
         }
-
     }
-    }
+}
 
