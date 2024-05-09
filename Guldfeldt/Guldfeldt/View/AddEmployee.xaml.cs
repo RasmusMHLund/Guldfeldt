@@ -1,4 +1,5 @@
-﻿using Guldfeldt.Persistence;
+﻿using Guldfeldt.Model;
+using Guldfeldt.Persistence;
 using Guldfeldt.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,14 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class AddEmployee : Window
     {
+        MainViewModel mvm = new MainViewModel();
+        EmployeeRepo er = new EmployeeRepo();
+
         public AddEmployee()
         {
             InitializeComponent();
-            
+            DataContext = mvm;
+
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -34,36 +39,42 @@ namespace Guldfeldt.View
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (Apprentice_CheckBox.IsChecked == true)
-            //{
-            //    avm.Name = FullName_TextBox.Text;
-            //    avm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
-            //    avm.Email = Email_TextBox.Text;
-            //    avm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
-            //    avm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
 
+            Employee employee = new Employee
+            {
+                FullName = FullName_TextBox.Text,
+                PhoneNumber = int.Parse(PhoneNumber_TextBox.Text),
+                Email = Email_TextBox.Text,
+                SalaryNumber = int.Parse(SalaryNumber_TextBox.Text),
+                CurrentWorkplace = CurrentWorkplace_TextBox.Text,
+                SocialSecurityNumber = SocialSecurityNumber_TextBox.Text,
+                IsApprentice = Apprentice_CheckBox.IsChecked,
+                IsJourneyman = Journeyman_CheckBox.IsChecked,
+                IsMentor = Mentor_Checkbox.IsChecked,
+            };
+            er.Create(employee);
+            MessageBox.Show(" Medarbejder oprettet. ");
+            Close();
+        }
 
-            //    apprenticeRepo.Create(apprentice);
-            //}
-            //else if (Journeyman_CheckBox.IsChecked == true)
-            //{
-            //    jvm.Name = FullName_TextBox.Text;
-            //    jvm.PhoneNumber = int.Parse(PhoneNumber_TextBox.Text);
-            //    jvm.Email = Email_TextBox.Text;
-            //    jvm.SalaryNumber = int.Parse(PhoneNumber_TextBox.Text);
-            //    jvm.SocialSecurityNumber = SocialSecurityNumber_TextBox.Text;
-            //    jvm.MentorStatus = Mentor_Checkbox.IsChecked;
+        private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Journeyman_CheckBox.IsChecked = false;
+            Mentor_Checkbox.Visibility = Visibility.Hidden;
+            ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
+        }
 
-            //    journeymanRepo.Create(journeyman);
-            //}
-            //else if ((Apprentice_CheckBox.IsChecked & Journeyman_CheckBox.IsChecked) == false)
-            //{
-            //    try
-            //    {
-            //        MessageBox.Show("Vælg medarbejder status");
-            //    }
-            //    catch { }
-            //}
+        private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            Apprentice_CheckBox.IsChecked = false;
+            Mentor_Checkbox.Visibility = Visibility.Visible;
+            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
+
+        }
+
+        private void Mentor_Checkbox_Checked(object sender, RoutedEventArgs e)
+        {
+            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
         }
     }
 }

@@ -36,11 +36,10 @@
         </Grid>
         <ListBox x:Name="EmployeeList_ListBox" HorizontalAlignment="Left" Height="372" Margin="27,94,0,0" VerticalAlignment="Top" Width="178" Background="#FFEAEAEA" FontSize="14" SelectionChanged="EmployeeList_ListBox_SelectionChanged" ItemsSource="{Binding Employees}" DisplayMemberPath="FullName" SelectedItem="{Binding SelectedEmployee}"/>
 
-        <ComboBox x:Name="ChooseLocation_ComboBox" HorizontalAlignment="Left" Margin="234,28,0,0" VerticalAlignment="Top" Width="178" Height="25" SelectedIndex="0" FontSize="14" IsEnabled="False" ItemsSource="{Binding Locations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedLocation}"/>
+        <ComboBox x:Name="ChooseLocation_ComboBox" HorizontalAlignment="Left" Margin="234,28,0,0" VerticalAlignment="Top" Text="Vælg lokation"  Width="178" Height="25" SelectedIndex="0" FontSize="14" IsEnabled="False" ItemsSource="{Binding Locations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedLocation}"/>
 
 
-
-        <Button x:Name="LocationSchedule_Button" Content="Tidsplan" HorizontalAlignment="Left" Margin="422,28,0,0" VerticalAlignment="Top" Height="25" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" RenderTransformOrigin="0.431,0.522" IsEnabled="False"/>
+        <Button x:Name="LocationSchedule_Button" Content="Tidsplan" HorizontalAlignment="Left" Margin="422,28,0,0" VerticalAlignment="Top" Height="25" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" RenderTransformOrigin="0.431,0.522" IsEnabled="False" Click="LocationSchedule_Button_Click"/>
         <Button x:Name="CreateLocation_Button" Content="Opret" HorizontalAlignment="Left" Margin="567,28,0,0" VerticalAlignment="Top" Height="25" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" Click="CreateLocation_Button_Click" BorderBrush="#FF5E5B5B" IsEnabled="False"/>
         <Button x:Name="EditLocation_Button" Content="Rediger" HorizontalAlignment="Left" Height="25" Margin="495,28,0,0" VerticalAlignment="Top" Width="65" FontSize="14" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" IsEnabled="False" Click="EditLocation_Button_Click"/>
 
@@ -49,7 +48,7 @@
 
 
         <Button x:Name="AddEmployee_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="27,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" Click="AddEmployee_Button_Click" BorderBrush="#FF5E5B5B"/>
-        <Button x:Name="DeleteEmployee_Button" Content="Slet" HorizontalAlignment="Left" Margin="120,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B"/>
+        <Button x:Name="DeleteEmployee_Button" Content="Slet" HorizontalAlignment="Left" Margin="120,471,0,0" VerticalAlignment="Top" Height="25" Width="85" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" Click="DeleteEmployee_Button_Click"/>
 
 
 

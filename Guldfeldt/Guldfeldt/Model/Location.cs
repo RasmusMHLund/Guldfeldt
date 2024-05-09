@@ -8,11 +8,11 @@ namespace Guldfeldt.Model
 {
     public class Location
     {
-        public int Id { get; set; }
+        public int LocationId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public bool IsConstructionSite { get; set; }
-        public bool IsSchool { get; set; }
+        public bool? IsConstructionSite { get; set; }
+        public bool? IsSchool { get; set; }
 
         public Location(string name, string address) 
         {

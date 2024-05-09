@@ -12,44 +12,43 @@ namespace Guldfeldt.Persistence
 {
     public  class EmployeeRepo
     {
-        string? ConnectionString;
+        string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
+
 
         private List<Employee> Employees;
         public EmployeeRepo()
         {
             Employees = new List<Employee>();
 
-            IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-            string? ConnectionString = config.GetConnectionString("MyDBConnection");
-
+         
+       
         }
 
         public void Create(Employee employeeToBeCreated)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO EMPLOYEE (FullName, PhoneNumber, Email, SalaryNumber, CurrentWorkplace, SocialSecurityNumber, IsApprentice, IsJourneyman, IsMentor)" +
                                                  "VALUES(@FullName,@PhoneNumber,@Email,@SalaryNumber,@CurrentWorkplace,@SocialSecurityNumber,@IsApprentice,@IsJourneyman,@IsMentor)" +
-                                                 "SELECT @@IDENTITY", con);
-                cmd.Parameters.Add("@FullName", SqlDbType.NVarChar).Value = employeeToBeCreated.FullName;
-                cmd.Parameters.Add("@PhoneNumber", SqlDbType.Int).Value = employeeToBeCreated.PhoneNumber;
-                cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = employeeToBeCreated.Email;
-                cmd.Parameters.Add("@SalaryNumber", SqlDbType.Int).Value = employeeToBeCreated.SalaryNumber;
-                cmd.Parameters.Add("@CurrentWorkplace", SqlDbType.NVarChar).Value = employeeToBeCreated.CurrentWorkplace;
-                cmd.Parameters.Add("@SocialSecurityNumber", SqlDbType.NVarChar).Value = employeeToBeCreated.SocialSecurityNumber;
+                                                 "SELECT SalaryNumber FROM EMPLOYEE WHERE SalaryNumber = SCOPE_IDENTITY()", con);
+                cmd.Parameters.Add("@FullName", SqlDbType.NVarChar).Value = (object)employeeToBeCreated.FullName ?? DBNull.Value;
+                cmd.Parameters.Add("@PhoneNumber", SqlDbType.Int).Value = (object)employeeToBeCreated.PhoneNumber ?? DBNull.Value;
+                cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = (object)employeeToBeCreated.Email ?? DBNull.Value;
+                cmd.Parameters.Add("@SalaryNumber", SqlDbType.Int).Value = (object)employeeToBeCreated.SalaryNumber ?? DBNull.Value;
+                cmd.Parameters.Add("@CurrentWorkplace", SqlDbType.NVarChar).Value = (object)employeeToBeCreated.CurrentWorkplace ?? DBNull.Value;
+                cmd.Parameters.Add("@SocialSecurityNumber", SqlDbType.NVarChar).Value = (object)employeeToBeCreated.SocialSecurityNumber ?? DBNull.Value;
                 cmd.Parameters.Add("@IsApprentice", SqlDbType.Bit).Value = employeeToBeCreated.IsApprentice;
                 cmd.Parameters.Add("@IsJourneyman", SqlDbType.Bit).Value = employeeToBeCreated.IsJourneyman;
                 cmd.Parameters.Add("@IsMentor", SqlDbType.Bit).Value = employeeToBeCreated.IsMentor;
-                employeeToBeCreated.Id = Convert.ToInt32(cmd.ExecuteScalar());
+                employeeToBeCreated.SalaryNumber = Convert.ToInt32(cmd.ExecuteScalar());
                 Employees.Add(employeeToBeCreated);
             }
         }
 
         public void RetrieveAll()
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
@@ -61,7 +60,7 @@ namespace Guldfeldt.Persistence
                     {
                         Employee employee = new Employee()
                         {
-                            Id = int.Parse(dr["Id"].ToString()),
+                          
                             FullName = dr["FullName"].ToString(),
                             PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
                             Email = dr["Email"].ToString(),
@@ -80,24 +79,24 @@ namespace Guldfeldt.Persistence
 
         public void Update(Employee employeeToBeUpdated)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("UPDATE EMPLOYEE SET FullName = @FullName, PhoneNumber = @PhoneNumber, Email = @Email, SalaryNumber = @SalaryNumber, CurrentWorkplace = @CurrentWorkplace, SocialSecurityNumber = @SocialSecurityNumber, IsApprentice = @IsApprentice, IsJourneyman = @IsJourneyman, IsMentor = @IsMentor WHERE Id = @Id", con);
-                cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = employeeToBeUpdated.Id;
+                SqlCommand cmd = new SqlCommand("UPDATE EMPLOYEE SET FullName = @FullName, PhoneNumber = @PhoneNumber, Email = @Email, SalaryNumber = @SalaryNumber, CurrentWorkplace = @CurrentWorkplace, SocialSecurityNumber = @SocialSecurityNumber, IsApprentice = @IsApprentice, IsJourneyman = @IsJourneyman, IsMentor = @IsMentor WHERE SalaryNumber = @SalaryNumber", con);
+                cmd.Parameters.Add("@SalaryNumber", SqlDbType.NVarChar).Value = employeeToBeUpdated.SalaryNumber;
                 cmd.ExecuteNonQuery();
             }
         }
 
         public void Delete(Employee employeeToBeDeleted)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("DELETE FROM EMPLOYEE WHERE Id = @Id", con);
-                cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = employeeToBeDeleted.Id;
+                SqlCommand cmd = new SqlCommand("DELETE FROM EMPLOYEE WHERE SalaryNumber = @SalaryNumber", con);
+                cmd.Parameters.Add("@SalaryNumber", SqlDbType.NVarChar).Value = employeeToBeDeleted.SalaryNumber;
                 cmd.ExecuteNonQuery();
             }
             Employees.Remove(employeeToBeDeleted);

@@ -8,7 +8,7 @@ namespace Guldfeldt.Model
 {
     public class Note
     {
-        public int Id { get; set; }
+        public int NoteId { get; set; }
         public string Title { get; set; }
         public string NoteDescription { get; set; }
         public string MentorName { get; set; }

@@ -12,21 +12,19 @@ namespace Guldfeldt.Persistence
 {
     public class LocationRepo
     {
-        string? ConnectionString;
+        string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
+
 
         private List<Location> Locations;
         public LocationRepo()
         {
             Locations = new List<Location>();
 
-            IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-            string? ConnectionString = config.GetConnectionString("MyDBConnection");
 
         }
         public void Create(Location locationToBeCreated)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO LOCATION (Name, Address, IsConstructionSite, IsSchool)" +
@@ -36,14 +34,14 @@ namespace Guldfeldt.Persistence
                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar).Value = locationToBeCreated.Address;
                 cmd.Parameters.Add("@IsConstructionSite", SqlDbType.Bit).Value = locationToBeCreated.IsConstructionSite;
                 cmd.Parameters.Add("@IsSchool", SqlDbType.Bit).Value = locationToBeCreated.IsSchool;
-                locationToBeCreated.Id = Convert.ToInt32(cmd.ExecuteScalar());
+                locationToBeCreated.LocationId = Convert.ToInt32(cmd.ExecuteScalar());
                 Locations.Add(locationToBeCreated);
             }
 
         }
         public void RetrieveAll()
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
@@ -53,38 +51,37 @@ namespace Guldfeldt.Persistence
                 {
                     while (dr.Read())
                     {
-                        Location workplace = new Location()
+                        Location location = new Location()
                         {
-                            Id = int.Parse(dr["Id"].ToString()),
                             Name = dr["Name"].ToString(),
                             Address = dr["Address"].ToString(),
                             IsConstructionSite = bool.Parse(dr["IsConstructionSite"].ToString()),
                             IsSchool = bool.Parse(dr["IsSchool"].ToString()),
                         };
-                        Locations.Add(workplace);
+                        Locations.Add(location);
                     }
                 }
             }
         }
         public void Update(Location locationToBeUpdated)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("UPDATE LOCATION SET Name = @Name, Address = @Address, IsConstructionSite = @IsConstructionSite, IsSchool = @IsSchool WHERE Id = @Id", con);
-                cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = locationToBeUpdated.Id;
+                SqlCommand cmd = new SqlCommand("UPDATE LOCATION SET Name = @Name, Address = @Address, IsConstructionSite = @IsConstructionSite, IsSchool = @IsSchool WHERE LocationId = @LocationId", con);
+                cmd.Parameters.Add("@LocationId", SqlDbType.NVarChar).Value = locationToBeUpdated.LocationId;
                 cmd.ExecuteNonQuery();
             }
         }
         public void Delete(Location locationToBeDeleted)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("DELETE FROM LOCATION WHERE Id = @Id", con);
-                cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = locationToBeDeleted.Id;
+                SqlCommand cmd = new SqlCommand("DELETE FROM LOCATION WHERE LocationId = @LocationId", con);
+                cmd.Parameters.Add("@LocationId", SqlDbType.NVarChar).Value = locationToBeDeleted.LocationId;
                 cmd.ExecuteNonQuery();
             }
             Locations.Remove(locationToBeDeleted);

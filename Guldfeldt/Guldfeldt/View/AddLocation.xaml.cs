@@ -1,4 +1,5 @@
-﻿using Guldfeldt.Persistence;
+﻿using Guldfeldt.Model;
+using Guldfeldt.Persistence;
 using Guldfeldt.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,12 @@ namespace Guldfeldt.View
     /// </summary>
     public partial class AddLocation : Window
     {
+        MainViewModel mvm = new MainViewModel();
+        LocationRepo lr = new LocationRepo();
         public AddLocation()
         {
             InitializeComponent();
+            DataContext = mvm;
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -33,8 +37,16 @@ namespace Guldfeldt.View
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-         
-
+            Location location = new Location
+            {
+                Name = LocationName_TextBox.Text,
+                Address = LocationAddress_TextBox.Text,
+                IsSchool = IsSchool_CheckBox.IsChecked,
+                IsConstructionSite = IsConstructionSite_CheckBox.IsChecked,
+            };
+            lr.Create(location);
+            MessageBox.Show(" Lokation oprettet. ");
+            Close();
         }
     }
 }

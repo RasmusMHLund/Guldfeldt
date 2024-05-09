@@ -18,14 +18,17 @@ using System.Diagnostics.Eventing.Reader;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Drawing;
+using Guldfeldt.Persistence;
 
 namespace Guldfeldt.View
 {
+        //SqlConnection con = new SqlConnection("Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True");
     public partial class EmployeeList : Window
     {
         MainViewModel mvm = new MainViewModel();
-        //SqlConnection con = new SqlConnection("Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True");
-        
+        EmployeeRepo er = new EmployeeRepo();
+        LocationRepo lr = new LocationRepo();
+
         public EmployeeList()
         {
             InitializeComponent();
@@ -74,7 +77,7 @@ namespace Guldfeldt.View
                     case "Alle mentorer":
                         DisableWorkplaceControls();
                         break;
-                    case "Arbejdsplads":
+                    case "Lokation":
                         EnableWorkplaceControls();
                         break;
                 }
@@ -126,13 +129,13 @@ namespace Guldfeldt.View
 
         private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            
+            Journeyman_CheckBox.IsChecked = false;
             Mentor_Checkbox.Visibility = Visibility.Hidden;
             ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
         }
         private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-           
+            Apprentice_CheckBox.IsChecked = false;
             Mentor_Checkbox.Visibility = Visibility.Visible;
             ApprenticeList_ComboBox.Visibility = Visibility.Visible;
         }
@@ -165,6 +168,17 @@ namespace Guldfeldt.View
 
         private void EmployeeList_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+        private void DeleteEmployee_Button_Click(object sender, RoutedEventArgs e)
+        {
+            er.Delete(mvm.SelectedEmployee);
+        }
+
+        private void LocationSchedule_Button_Click(object sender, RoutedEventArgs e)
+        {
+            lr.Delete(mvm.SelectedLocation);
         }
     }
 }

@@ -15,11 +15,15 @@
     </Window.Resources>
     <Grid>
         <Grid HorizontalAlignment="Center" Height="157" Margin="0,30,0,0" VerticalAlignment="Top" Width="398" Background="#FFEAEAEA">
-            <TextBox x:Name="WorkplaceName_TextBox" HorizontalAlignment="Center" Margin="0,21,0,0" TextWrapping="Wrap" Text="Skriv navn på arbejdsplads" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="WorkplaceAddress_TextBox" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Skriv adresse på arbejdsplads" VerticalAlignment="Center" Width="378" Height="30" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="LocationName_TextBox" HorizontalAlignment="Center" Margin="0,13,0,0" TextWrapping="Wrap" Text="{Binding SelectedLocation.Name}" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="LocationAddress_TextBox" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SelectedLocation.Address}" VerticalAlignment="Top" Width="378" Height="30" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center" Margin="0,50,0,0"/>
+            <CheckBox x:Name="IsSchool_CheckBox" Content="Skole" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Height="20" Width="102" FontSize="14" IsChecked="{Binding SelectedLocation.IsSchool}"/>
+            <CheckBox x:Name="IsConstructionSite_CheckBox" Content="Byggeplads" HorizontalAlignment="Left" Margin="286,85,0,0" VerticalAlignment="Top" Height="20" Width="102" FontSize="14" IsChecked="{Binding SelectedLocation.IsConstructionSite}"/>
 
-            <Button x:Name="Cancel_Button" Content="Annuller" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FFA0A0A0" Foreground="White" FontSize="14" BorderBrush="#FFA0A0A0" Click="Cancel_Button_Click"/>
-            <Button x:Name="Save_Button" Content="Gem" HorizontalAlignment="Left" Margin="294,122,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
+            <Button x:Name="Cancel_Button" Content="Annuller" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FFA0A0A0" Foreground="White" FontSize="14" Click="Cancel_Button_Click" BorderBrush="#FFA0A0A0"/>
+            <Button x:Name="Save_Button" Content="Gem" HorizontalAlignment="Left" Margin="294,122,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B" Click="Save_Button_Click"/>
+            <Button x:Name="Delete_Button" Content="Slet" HorizontalAlignment="Center" Margin="0,122,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B" Click="Delete_Button_Click"/>
+
         </Grid>
     </Grid>
 </Window>

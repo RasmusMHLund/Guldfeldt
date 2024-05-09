@@ -12,21 +12,18 @@ namespace Guldfeldt.Persistence
 {
     public class NoteRepo
     {
-        string? ConnectionString;
+        string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
+
 
         private List<Note> Notes;
         public NoteRepo()
         {
             Notes = new List<Note>();
 
-            IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-            string? ConnectionString = config.GetConnectionString("MyDBConnection");
-
         }
         public void Create(Note noteToBeCreated)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO NOTE (Title, NoteDescription, MentorName, Date)" +
@@ -36,15 +33,14 @@ namespace Guldfeldt.Persistence
                 cmd.Parameters.Add("@NoteDescription", SqlDbType.NVarChar).Value = noteToBeCreated.NoteDescription;
                 cmd.Parameters.Add("@MentorName", SqlDbType.NVarChar).Value = noteToBeCreated.MentorName;
                 cmd.Parameters.Add("@Date", SqlDbType.DateTime2).Value = noteToBeCreated.Date;
-
-                noteToBeCreated.Id = Convert.ToInt32(cmd.ExecuteScalar());
+                noteToBeCreated.NoteId = Convert.ToInt32(cmd.ExecuteScalar());
                 Notes.Add(noteToBeCreated);
             }
 
         }
         public void RetrieveAll()
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
@@ -56,7 +52,7 @@ namespace Guldfeldt.Persistence
                     {
                         Note note = new Note()
                         {
-                            Id = int.Parse(dr["Id"].ToString()),
+                            
                             Title = dr["Title"].ToString(),
                             NoteDescription = dr["NoteDescription"].ToString(),
                             MentorName = dr["MentorName"].ToString(),
@@ -69,23 +65,23 @@ namespace Guldfeldt.Persistence
         }
         public void Update(Note noteToBeUpdated)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("UPDATE NOTE SET Title = @Title, NoteDescription = @NoteDescription, MentorName = @MentorName, Date = @Date WHERE Id = @Id", con);
-                cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = noteToBeUpdated.Id;
+                SqlCommand cmd = new SqlCommand("UPDATE NOTE SET Title = @Title, NoteDescription = @NoteDescription, MentorName = @MentorName, Date = @Date WHERE NoteId = @NoteId", con);
+                cmd.Parameters.Add("@NoteId", SqlDbType.NVarChar).Value = noteToBeUpdated.NoteId;
                 cmd.ExecuteNonQuery();
             }
         }
         public void Delete(Note noteToBeDeleted)
         {
-            using (SqlConnection con = new SqlConnection(ConnectionString))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
                 SqlCommand cmd = new SqlCommand("DELETE FROM NOTE WHERE Id = @Id", con);
-                cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = noteToBeDeleted.Id;
+                cmd.Parameters.Add("@NoteId", SqlDbType.NVarChar).Value = noteToBeDeleted.NoteId;
                 cmd.ExecuteNonQuery();
             }
             Notes.Remove(noteToBeDeleted);

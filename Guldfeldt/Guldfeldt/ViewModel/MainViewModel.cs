@@ -25,20 +25,23 @@ namespace Guldfeldt.ViewModel
             "Alle lærlinge",
             "Alle svende",
             "Alle mentorer",
-            "Arbejdsplads"
+            "Lokation"
         };
         private ObservableCollection<Employee> _employees;
         public ObservableCollection<Employee> Employees
         {
             get { return _employees; }
-            set { _employees = value; OnPropertyChanged(nameof(Employees)); }
+            set { _employees = value; 
+                OnPropertyChanged(nameof(Employees)); }
         }
 
         private Employee _selectedEmployee;
         public Employee SelectedEmployee
         {
             get { return _selectedEmployee; }
-            set { _selectedEmployee = value; OnPropertyChanged(nameof(SelectedEmployee)); }
+            set { _selectedEmployee = value; 
+                OnPropertyChanged(nameof(SelectedEmployee)); 
+                LoadEmployeesFromDatabase();}
         }
 
         private string _selectedPickListItem;
@@ -46,19 +49,17 @@ namespace Guldfeldt.ViewModel
         {
             get { return _selectedPickListItem; }
             set
-            {
-                _selectedPickListItem = value;
+            {   _selectedPickListItem = value;
                 OnPropertyChanged(nameof(SelectedPickListItem));
-                LoadEmployeesFromDatabase();
-            }
+                LoadEmployeesFromDatabase(); }
         }
-
 
         private ObservableCollection<Location> _locations;
         public ObservableCollection<Location> Locations
         {
             get { return _locations; }
-            set { _locations = value; OnPropertyChanged(nameof(Locations)); }
+            set { _locations = value; 
+                OnPropertyChanged(nameof(Locations)); }
         }
 
         private Location _selectedLocation;
@@ -66,11 +67,11 @@ namespace Guldfeldt.ViewModel
         public Location SelectedLocation
         {
             get { return _selectedLocation; }
-            set { _selectedLocation = value; OnPropertyChanged(nameof(SelectedLocation)); LoadEmployeesFromDatabase(); }
+            set { _selectedLocation = value; 
+                OnPropertyChanged(nameof(SelectedLocation));
+                LoadEmployeesFromDatabase();
+            }
         }
-
-
-
 
         public MainViewModel()
         {
@@ -78,37 +79,33 @@ namespace Guldfeldt.ViewModel
             Locations = new ObservableCollection<Location>();
             SelectedPickListItem = "Alle medarbejdere";
             LoadLocationsFromDatabase();
+            
         }
 
         private void LoadEmployeesFromDatabase()
         {
             string query = "";
+            Employees.Clear();
 
             switch (SelectedPickListItem)
             {
                 case "Alle medarbejdere":
                     query = "SELECT * FROM EMPLOYEE";
-                    Employees.Clear();
                     break;
                 case "Alle lærlinge":
                     query = "SELECT * FROM EMPLOYEE WHERE IsApprentice = 'True'";
-                    Employees.Clear();
                     break;
                 case "Alle svende":
                     query = "SELECT * FROM EMPLOYEE WHERE IsJourneyman = 'True'";
-                    Employees.Clear();
                     break;
                 case "Alle mentorer":
                     query = "SELECT * FROM EMPLOYEE WHERE IsMentor = 'True'";
-                    Employees.Clear();
                     break;
-                case "Arbejdsplads":
+                case "Lokation":
                     query = "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = 'SelectedLocation.Name'";
-                    Employees.Clear();
                     break;
                 default:
                     query = "SELECT * FROM EMPLOYEE";
-                    Employees.Clear();
                     break;
             }
 
@@ -149,7 +146,6 @@ namespace Guldfeldt.ViewModel
                 con.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
 
-               
                 while (dr.Read())
                 {
                     Location location = new Location 
