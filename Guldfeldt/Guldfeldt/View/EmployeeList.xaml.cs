@@ -45,8 +45,14 @@ namespace Guldfeldt.View
         {
             AddEmployee addEmployee = new AddEmployee();
             addEmployee.ShowDialog();
+            
         }
 
+        private void DeleteEmployee_Button_Click(object sender, RoutedEventArgs e)
+        {
+            er.Delete(mvm.SelectedEmployee);
+           
+        }
         private void NoteList_Button_Click(object sender, RoutedEventArgs e)
         {
             NoteList noteList = new NoteList();
@@ -132,12 +138,14 @@ namespace Guldfeldt.View
             Journeyman_CheckBox.IsChecked = false;
             Mentor_Checkbox.Visibility = Visibility.Hidden;
             ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
+            NoteList_Button.Visibility = Visibility.Visible;
         }
         private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Apprentice_CheckBox.IsChecked = false;
             Mentor_Checkbox.Visibility = Visibility.Visible;
             ApprenticeList_ComboBox.Visibility = Visibility.Visible;
+            NoteList_Button.Visibility = Visibility.Hidden;
         }
 
         private void Mentor_Checkbox_Checked(object sender, RoutedEventArgs e)
@@ -166,19 +174,11 @@ namespace Guldfeldt.View
             MessageBox.Show(" Ændring gemt. ");
         }
 
-        private void EmployeeList_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
-
-        private void DeleteEmployee_Button_Click(object sender, RoutedEventArgs e)
-        {
-            er.Delete(mvm.SelectedEmployee);
-        }
 
         private void LocationSchedule_Button_Click(object sender, RoutedEventArgs e)
         {
-            lr.Delete(mvm.SelectedLocation);
+           
         }
     }
 }

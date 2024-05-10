@@ -47,6 +47,7 @@ namespace Guldfeldt.View
             lr.Create(location);
             MessageBox.Show(" Lokation oprettet. ");
             Close();
+            
         }
     }
 }

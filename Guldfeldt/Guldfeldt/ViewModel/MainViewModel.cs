@@ -41,7 +41,7 @@ namespace Guldfeldt.ViewModel
             get { return _selectedEmployee; }
             set { _selectedEmployee = value; 
                 OnPropertyChanged(nameof(SelectedEmployee)); 
-                LoadEmployeesFromDatabase();}
+               }
         }
 
         private string _selectedPickListItem;
