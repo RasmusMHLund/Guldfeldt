@@ -45,13 +45,16 @@ namespace Guldfeldt.View
         {
             AddEmployee addEmployee = new AddEmployee();
             addEmployee.ShowDialog();
-            
         }
 
         private void DeleteEmployee_Button_Click(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Bekræft sletning af medarbejder","Bekræft",MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
             er.Delete(mvm.SelectedEmployee);
-           
+            MessageBox.Show(" Medarbejder slettet. ");
+
+            }   
         }
         private void NoteList_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -135,14 +138,14 @@ namespace Guldfeldt.View
 
         private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            Journeyman_CheckBox.IsChecked = false;
+            
             Mentor_Checkbox.Visibility = Visibility.Hidden;
             ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
             NoteList_Button.Visibility = Visibility.Visible;
         }
         private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            Apprentice_CheckBox.IsChecked = false;
+            
             Mentor_Checkbox.Visibility = Visibility.Visible;
             ApprenticeList_ComboBox.Visibility = Visibility.Visible;
             NoteList_Button.Visibility = Visibility.Hidden;
@@ -178,7 +181,8 @@ namespace Guldfeldt.View
 
         private void LocationSchedule_Button_Click(object sender, RoutedEventArgs e)
         {
-           
+            lr.Delete(mvm.SelectedLocation);
+            MessageBox.Show(" Lokation slettet. ");
         }
     }
 }

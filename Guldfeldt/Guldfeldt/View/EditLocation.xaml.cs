@@ -50,8 +50,8 @@ namespace Guldfeldt.View
 
         private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
-            Location deleteLocation = mvm.SelectedLocation;
-            lr.Delete(deleteLocation);
+            
+            lr.Delete(mvm.SelectedLocation);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Guldfeldt.View
                 PhoneNumber = int.Parse(PhoneNumber_TextBox.Text),
                 Email = Email_TextBox.Text,
                 SalaryNumber = int.Parse(SalaryNumber_TextBox.Text),
-                CurrentWorkplace = CurrentWorkplace_TextBox.Text,
+                CurrentWorkplace = CurrentWorkplace_ComboBox.Text,
                 SocialSecurityNumber = SocialSecurityNumber_TextBox.Text,
                 IsApprentice = Apprentice_CheckBox.IsChecked,
                 IsJourneyman = Journeyman_CheckBox.IsChecked,

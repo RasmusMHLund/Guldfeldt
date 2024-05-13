@@ -31,7 +31,7 @@ namespace Guldfeldt.ViewModel
         public ObservableCollection<Employee> Employees
         {
             get { return _employees; }
-            set { _employees = value; 
+            set { _employees = value;
                 OnPropertyChanged(nameof(Employees)); }
         }
 
@@ -39,9 +39,9 @@ namespace Guldfeldt.ViewModel
         public Employee SelectedEmployee
         {
             get { return _selectedEmployee; }
-            set { _selectedEmployee = value; 
-                OnPropertyChanged(nameof(SelectedEmployee)); 
-               }
+            set { _selectedEmployee = value;
+                OnPropertyChanged(nameof(SelectedEmployee));
+            }
         }
 
         private string _selectedPickListItem;
@@ -49,7 +49,7 @@ namespace Guldfeldt.ViewModel
         {
             get { return _selectedPickListItem; }
             set
-            {   _selectedPickListItem = value;
+            { _selectedPickListItem = value;
                 OnPropertyChanged(nameof(SelectedPickListItem));
                 LoadEmployeesFromDatabase(); }
         }
@@ -58,7 +58,7 @@ namespace Guldfeldt.ViewModel
         public ObservableCollection<Location> Locations
         {
             get { return _locations; }
-            set { _locations = value; 
+            set { _locations = value;
                 OnPropertyChanged(nameof(Locations)); }
         }
 
@@ -67,7 +67,7 @@ namespace Guldfeldt.ViewModel
         public Location SelectedLocation
         {
             get { return _selectedLocation; }
-            set { _selectedLocation = value; 
+            set { _selectedLocation = value;
                 OnPropertyChanged(nameof(SelectedLocation));
                 LoadEmployeesFromDatabase();
             }
@@ -78,64 +78,112 @@ namespace Guldfeldt.ViewModel
             Employees = new ObservableCollection<Employee>();
             Locations = new ObservableCollection<Location>();
             SelectedPickListItem = "Alle medarbejdere";
+            SelectedLocation = new Location()
+            {
+                Name = "Vælg lokation",
+                Address = null,
+                IsConstructionSite = null,
+                IsSchool = null,
+
+
+            };
+
             LoadLocationsFromDatabase();
-            
+            LoadEmployeesFromDatabase();
+
+
         }
 
         private void LoadEmployeesFromDatabase()
         {
-            string query = "";
             Employees.Clear();
 
-            switch (SelectedPickListItem)
-            {
-                case "Alle medarbejdere":
-                    query = "SELECT * FROM EMPLOYEE";
-                    break;
-                case "Alle lærlinge":
-                    query = "SELECT * FROM EMPLOYEE WHERE IsApprentice = 'True'";
-                    break;
-                case "Alle svende":
-                    query = "SELECT * FROM EMPLOYEE WHERE IsJourneyman = 'True'";
-                    break;
-                case "Alle mentorer":
-                    query = "SELECT * FROM EMPLOYEE WHERE IsMentor = 'True'";
-                    break;
-                case "Lokation":
-                    query = "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = 'SelectedLocation.Name'";
-                    break;
-                default:
-                    query = "SELECT * FROM EMPLOYEE";
-                    break;
-            }
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-
-                SqlCommand cmd = new SqlCommand(query, con);
-
+            using (SqlConnection con = new SqlConnection(connectionString)) {
                 con.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
 
-                while (dr.Read())
+                switch (SelectedPickListItem)
                 {
-                    Employee employee = new Employee
-                    {
-                        FullName = dr["FullName"].ToString(),
-                        PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
-                        Email = dr["Email"].ToString(),
-                        SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
-                        CurrentWorkplace = dr["CurrentWorkplace"].ToString(),
-                        SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
-                        IsApprentice = bool.Parse(dr["IsApprentice"].ToString()),
-                        IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
-                        IsMentor = bool.Parse(dr["IsMentor"].ToString()),
-                    };
-                    Employees.Add(employee);
+                    case "Alle medarbejdere":
+                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE");
+                        break;
+                    case "Alle lærlinge":
+                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsApprentice = 'True'");
+                        break;
+                    case "Alle svende":
+                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsJourneyman = 'True'");
+                        break;
+                    case "Alle mentorer":
+                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsMentor = 'True'");
+                        break;
+                    case "Lokation":
+                        string chosenLocation = SelectedLocation.Name ?? "";
+                        LocationQuery(con, "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = @CurrentWorkplace", "@CurrentWorkplace", chosenLocation);
+                        break;
+                    default:
+                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE");
+                        break;
+
                 }
-                dr.Close();
             }
         }
+        private void EmployeeQuery(SqlConnection con, string query) {
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Employee employee = new Employee
+                        {
+                            FullName = dr["FullName"].ToString(),
+                            PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
+                            Email = dr["Email"].ToString(),
+                            SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
+                            CurrentWorkplace = dr["CurrentWorkplace"].ToString(),
+                            SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
+                            IsApprentice = bool.Parse(dr["IsApprentice"].ToString()),
+                            IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
+                            IsMentor = bool.Parse(dr["IsMentor"].ToString()),
+                        };
+                        Employees.Add(employee);
+                    }
+                }
+            }
+        }
+
+        private void LocationQuery(SqlConnection con, string query, string parameterName, string parameterValue)
+        {
+
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue(parameterName, parameterValue);
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Employee employee = new Employee
+                        {
+                            FullName = dr["FullName"].ToString(),
+                            PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
+                            Email = dr["Email"].ToString(),
+                            SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
+                            CurrentWorkplace = dr["CurrentWorkplace"].ToString(),
+                            SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
+                            IsApprentice = bool.Parse(dr["IsApprentice"].ToString()),
+                            IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
+                            IsMentor = bool.Parse(dr["IsMentor"].ToString()),
+                        };
+                        Employees.Add(employee);
+
+                    }
+                }
+            }
+        }
+
+
+
         private void LoadLocationsFromDatabase()
         {
             string query = "SELECT * FROM LOCATION";
