@@ -117,7 +117,7 @@ namespace Guldfeldt.ViewModel
                         break;
                     case "Lokation":
                         string chosenLocation = SelectedLocation.Name ?? "";
-                        LocationQuery(con, "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = @CurrentWorkplace", "@CurrentWorkplace", chosenLocation);
+                        EmployeeFromLocationQuery(con, "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = @CurrentWorkplace", "@CurrentWorkplace", chosenLocation);
                         break;
                     default:
                         EmployeeQuery(con, "SELECT * FROM EMPLOYEE");
@@ -152,9 +152,8 @@ namespace Guldfeldt.ViewModel
             }
         }
 
-        private void LocationQuery(SqlConnection con, string query, string parameterName, string parameterValue)
+        private void EmployeeFromLocationQuery(SqlConnection con, string query, string parameterName, string parameterValue)
         {
-
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue(parameterName, parameterValue);

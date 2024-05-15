@@ -69,7 +69,7 @@ namespace Guldfeldt.Persistence
                 con.Open();
 
                 SqlCommand cmd = new SqlCommand("UPDATE LOCATION SET Name = @Name, Address = @Address, IsConstructionSite = @IsConstructionSite, IsSchool = @IsSchool WHERE LocationId = @LocationId", con);
-                cmd.Parameters.Add("@LocationId", SqlDbType.NVarChar).Value = locationToBeUpdated.LocationId;
+                cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = locationToBeUpdated.LocationId;
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar).Value = locationToBeUpdated.Name;
                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar).Value = locationToBeUpdated.Address;
                 cmd.Parameters.Add("@IsConstructionSite", SqlDbType.Bit).Value = locationToBeUpdated.IsConstructionSite;
@@ -84,7 +84,7 @@ namespace Guldfeldt.Persistence
                 con.Open();
 
                 SqlCommand cmd = new SqlCommand("DELETE FROM LOCATION WHERE LocationId = @LocationId", con);
-                cmd.Parameters.Add("@LocationId", SqlDbType.NVarChar).Value = locationToBeDeleted.LocationId;
+                cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = locationToBeDeleted.LocationId;
                 cmd.ExecuteNonQuery();
             }
             Locations.Remove(locationToBeDeleted);
