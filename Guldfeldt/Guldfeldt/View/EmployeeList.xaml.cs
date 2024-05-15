@@ -33,6 +33,7 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
             DataContext = mvm;
+            
         }
 
         private void CreateLocation_Button_Click(object sender, RoutedEventArgs e)

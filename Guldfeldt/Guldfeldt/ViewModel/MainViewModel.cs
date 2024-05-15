@@ -174,6 +174,8 @@ namespace Guldfeldt.ViewModel
                             IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
                             IsMentor = bool.Parse(dr["IsMentor"].ToString()),
                         };
+                        
+                        
                         Employees.Add(employee);
 
                     }
