@@ -14,11 +14,14 @@ namespace Guldfeldt.Model
         public bool? IsConstructionSite { get; set; }
         public bool? IsSchool { get; set; }
 
-        public Location(string name, string address) 
+        public Location(int locationId, string name, string address, bool? isConstructionSite, bool? isSchool) 
         {
+            this.LocationId = locationId;
             this.Name = name;
             this.Address = address;
+            this.IsConstructionSite = isConstructionSite;
+            this.IsSchool = isSchool;
         }
-        public Location(): this(null, null) { }
+        public Location(): this(0, null, null, false, false) { }
     }
 }

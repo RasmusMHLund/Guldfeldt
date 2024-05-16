@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Guldfeldt.ViewModel
@@ -78,20 +79,17 @@ namespace Guldfeldt.ViewModel
             Employees = new ObservableCollection<Employee>();
             Locations = new ObservableCollection<Location>();
             SelectedPickListItem = "Alle medarbejdere";
-            SelectedLocation = new Location()
-            {
-                Name = "Vælg lokation",
-                Address = null,
-                IsConstructionSite = null,
-                IsSchool = null,
-
-
-            };
+            //SelectedLocation = new Location()
+            //{
+            //    Name = "Vælg lokation",
+            //    Address = null,
+            //    IsConstructionSite = false,
+            //    IsSchool = false,
+            //};
+            
 
             LoadLocationsFromDatabase();
             LoadEmployeesFromDatabase();
-
-
         }
 
         private void LoadEmployeesFromDatabase()
@@ -116,8 +114,15 @@ namespace Guldfeldt.ViewModel
                         EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsMentor = 'True'");
                         break;
                     case "Lokation":
-                        string chosenLocation = SelectedLocation.Name ?? "";
+                       if (SelectedLocation != null)
+                        {
+                        string chosenLocation = SelectedLocation.Name;
                         EmployeeFromLocationQuery(con, "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = @CurrentWorkplace", "@CurrentWorkplace", chosenLocation);
+
+                        } else
+                        {
+                            MessageBox.Show(" Vælg en lokation. ");
+                        } 
                         break;
                     default:
                         EmployeeQuery(con, "SELECT * FROM EMPLOYEE");

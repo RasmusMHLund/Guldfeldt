@@ -1,4 +1,5 @@
 ﻿using Guldfeldt.Model;
+using Guldfeldt.ViewModel;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -88,6 +89,7 @@ namespace Guldfeldt.Persistence
                 cmd.ExecuteNonQuery();
             }
             Locations.Remove(locationToBeDeleted);
+           
         }
     }
 }

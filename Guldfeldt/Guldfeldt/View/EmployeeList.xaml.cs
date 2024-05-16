@@ -33,7 +33,6 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
             DataContext = mvm;
-            
         }
 
         private void CreateLocation_Button_Click(object sender, RoutedEventArgs e)
@@ -182,6 +181,8 @@ namespace Guldfeldt.View
 
         private void LocationSchedule_Button_Click(object sender, RoutedEventArgs e)
         {
+            
+
             lr.Delete(mvm.SelectedLocation);
             MessageBox.Show(" Lokation slettet. ");
         }
