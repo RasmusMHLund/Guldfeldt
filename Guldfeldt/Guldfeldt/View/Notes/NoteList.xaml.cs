@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Guldfeldt.Persistence;
+using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +16,14 @@ using System.Windows.Shapes;
 
 namespace Guldfeldt.View.Notes
 {
-    /// <summary>
-    /// Interaction logic for NoteList.xaml
-    /// </summary>
     public partial class NoteList : Window
     {
+        MainViewModel mvm = new MainViewModel();
+        NoteRepo nr = new NoteRepo();
         public NoteList()
         {
             InitializeComponent();
+            DataContext = mvm;
         }
 
         private void AddNote_Button_Click(object sender, RoutedEventArgs e)
@@ -32,8 +34,13 @@ namespace Guldfeldt.View.Notes
 
         private void DeleteNote_Button_Click(object sender, RoutedEventArgs e)
         {
-            DeleteNote deleteNote = new DeleteNote();
-            deleteNote.ShowDialog();
+            if (MessageBox.Show("Bekræft sletning af note", "Bekræft", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                nr.Delete(mvm.SelectedNote);
+                MessageBox.Show(" Note slettet. ");
+
+            }
+
         }
 
         private void EditNote_Button_Click(object sender, RoutedEventArgs e)
@@ -45,6 +52,28 @@ namespace Guldfeldt.View.Notes
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void SortBy_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SortBy_ComboBox.SelectedItem != null)
+            {
+                switch (SortBy_ComboBox.SelectedItem)
+                {
+                    case "A-Z":
+
+                        break;
+                    case "Z-A":
+
+                        break;
+                    case "Ældste":
+
+                        break;
+                    case "Nyeste":
+
+                        break;
+                }
+            }
         }
     }
 }

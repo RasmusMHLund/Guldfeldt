@@ -36,7 +36,6 @@ namespace Guldfeldt.Persistence
                 noteToBeCreated.NoteId = Convert.ToInt32(cmd.ExecuteScalar());
                 Notes.Add(noteToBeCreated);
             }
-
         }
         public void RetrieveAll()
         {
@@ -70,7 +69,7 @@ namespace Guldfeldt.Persistence
                 con.Open();
 
                 SqlCommand cmd = new SqlCommand("UPDATE NOTE SET Title = @Title, NoteDescription = @NoteDescription, MentorName = @MentorName, Date = @Date WHERE NoteId = @NoteId", con);
-                cmd.Parameters.Add("@NoteId", SqlDbType.NVarChar).Value = noteToBeUpdated.NoteId;
+                cmd.Parameters.Add("@NoteId", SqlDbType.Int).Value = noteToBeUpdated.NoteId;
                 cmd.ExecuteNonQuery();
             }
         }
@@ -80,11 +79,19 @@ namespace Guldfeldt.Persistence
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("DELETE FROM NOTE WHERE Id = @Id", con);
-                cmd.Parameters.Add("@NoteId", SqlDbType.NVarChar).Value = noteToBeDeleted.NoteId;
-                cmd.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand("DELETE FROM NOTE WHERE NoteId = @NoteId", con);
+                cmd.Parameters.Add("@NoteId", SqlDbType.Int).Value = noteToBeDeleted.NoteId;
+                var deletedNoteId = Convert.ToInt32(cmd.ExecuteScalar());
+                if (deletedNoteId == noteToBeDeleted.NoteId)
+                {
+                    Notes.Remove(noteToBeDeleted);
+
+                } 
+                else 
+                {
+                    throw new Exception("Sletning af note fejlet.");
+                }
             }
-            Notes.Remove(noteToBeDeleted);
         }
     }
 }

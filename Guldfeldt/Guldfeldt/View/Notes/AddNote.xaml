@@ -20,7 +20,7 @@
             <TextBox x:Name="WriteTitle_TextBox" HorizontalAlignment="Left" Height="33" Margin="24,27,0,0" TextWrapping="Wrap" Text="Skriv titel på note..." VerticalAlignment="Top" Width="327" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Top"/>
             <TextBox x:Name="WriteNote_TextBox" HorizontalAlignment="Left" Height="117" Margin="24,74,0,0" TextWrapping="Wrap" Text="Skriv note til lærling..." VerticalAlignment="Top" Width="327" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Top"/>
             <Button x:Name="Cancel_Button" Content="Annuller" HorizontalAlignment="Left" Margin="24,206,0,0" VerticalAlignment="Top" Height="25" Width="94" Template="{StaticResource MouseOverBackground}" Background="#FFA0A0A0" Foreground="White" FontSize="14" BorderBrush="#FFA0A0A0" Click="Cancel_Button_Click"/>
-            <Button x:Name="Add_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="258,206,0,0" VerticalAlignment="Top" Height="25" Width="93" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B"/>
+            <Button x:Name="Add_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="258,206,0,0" VerticalAlignment="Top" Height="25" Width="93" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B" Click="Add_Button_Click"/>
 
         </Grid>
 

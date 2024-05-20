@@ -16,9 +16,9 @@
     </Window.Resources>
 
     <Grid>
-        <ListBox x:Name="NoteList_ListBox" HorizontalAlignment="Left" Height="430" Margin="26,52,0,0" VerticalAlignment="Top" Width="178" FontSize="14" Background="#FFEAEAEA"/>
+        <ListBox x:Name="NoteList_ListBox" HorizontalAlignment="Left" Height="430" Margin="26,52,0,0" VerticalAlignment="Top" Width="178" FontSize="14" Background="#FFEAEAEA" ItemsSource="{Binding Notes}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedNote}"/>
         <TextBox x:Name="SearchByKeyword_TextBox" HorizontalAlignment="Left" Height="25" Margin="26,23,0,0" TextWrapping="Wrap" Text="Søg...            🔍" VerticalAlignment="Top" Width="107" VerticalContentAlignment="Center" FontSize="14" Background="#FFEAEAEA"/>
-        <ComboBox x:Name="SortBy_ComboBox" HorizontalAlignment="Left" Height="25" Margin="137,23,0,0" VerticalAlignment="Top" Width="67" SelectedIndex="0" FontSize="14">
+        <ComboBox x:Name="SortBy_ComboBox" HorizontalAlignment="Left" Height="25" Margin="137,23,0,0" VerticalAlignment="Top" Width="67" SelectedIndex="0" FontSize="14" SelectionChanged="SortBy_ComboBox_SelectionChanged">
             <ComboBoxItem Visibility="Collapsed" Content="Sortér"/>
             <ComboBoxItem Content="Ældste"/>
             <ComboBoxItem Content="Nyeste"/>
@@ -28,17 +28,17 @@
         <Button x:Name="AddNote_Button"  HorizontalAlignment="Left" Height="25" Margin="26,487,0,0" VerticalAlignment="Top" Width="178" Content="Tilføj note" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" Click="AddNote_Button_Click"/>
 
         <Grid HorizontalAlignment="Left" Height="460" Margin="226,52,0,0" VerticalAlignment="Top" Width="330" Background="#FFEAEAEA">
-            <Label x:Name="Title_Label" Content="Titel" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontSize="19"/>
+            <Label x:Name="Title_Label" Content="{Binding SelectedNote.Title}" HorizontalAlignment="Center" Margin="0,19,0,0" VerticalAlignment="Top" FontSize="19"/>
             <Rectangle HorizontalAlignment="Center" Height="1" Margin="0,54,0,0" Stroke="Black" VerticalAlignment="Top" Width="290" RenderTransformOrigin="0.5,0.5"/>
 
             <Label x:Name="DateAdded_Label" Content="Dato tilføjet:" HorizontalAlignment="Left" Height="31" Margin="20,69,0,0" VerticalAlignment="Top" Width="103" FontSize="16"/>
-            <TextBox x:Name="DateAdded_TextBox" HorizontalAlignment="Left" Height="31" Margin="20,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="126" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="DateAdded_TextBox" HorizontalAlignment="Left" Height="31" Margin="20,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" FontSize="14" Background="#FFC7C7C7" Text="{Binding SelectedNote.Date}" IsEnabled="False"/>
 
             <Label x:Name="AddedBy_Label" Content="Tilføjet af:" HorizontalAlignment="Left" Height="31" Margin="195,69,0,0" VerticalAlignment="Top" Width="103" FontSize="16"/>
-            <TextBox x:Name="AddedBy_TextBox" HorizontalAlignment="Left" Height="31" Margin="184,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="126" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="AddedBy_TextBox" HorizontalAlignment="Left" Height="31" Margin="184,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" FontSize="14" Background="#FFC7C7C7" Text="{Binding SelectedNote.MentorName}" IsEnabled="False"/>
 
             <Label x:Name="NoteDescription_Label" Content="Note:" HorizontalAlignment="Left" Height="34" Margin="20,166,0,0" VerticalAlignment="Top" Width="121" FontSize="16"/>
-            <TextBox x:Name="NoteDescription_TextBox" HorizontalAlignment="Center" Height="191" Margin="0,200,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="290" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="NoteDescription_TextBox" HorizontalAlignment="Center" Height="191" Margin="0,200,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="290" FontSize="14" Background="#FFC7C7C7" Text="{Binding SelectedNote.NoteDescription}" IsEnabled="False"/>
 
             <Button x:Name="DeleteNote_Button"  HorizontalAlignment="Left" Height="25" Margin="20,406,0,0" VerticalAlignment="Top" Width="116" Content="Slet note" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" Click="DeleteNote_Button_Click"/>
             <Button x:Name="EditNote_Button"  HorizontalAlignment="Left" Height="25" Margin="178,406,0,0" VerticalAlignment="Top" Width="132" Content="Redigér note" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" Click="EditNote_Button_Click"/>

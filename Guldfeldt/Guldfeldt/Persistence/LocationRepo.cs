@@ -15,13 +15,10 @@ namespace Guldfeldt.Persistence
     {
         string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
 
-
         private List<Location> Locations;
         public LocationRepo()
         {
             Locations = new List<Location>();
-
-
         }
         public void Create(Location locationToBeCreated)
         {
@@ -89,7 +86,6 @@ namespace Guldfeldt.Persistence
                 cmd.ExecuteNonQuery();
             }
             Locations.Remove(locationToBeDeleted);
-           
         }
     }
 }

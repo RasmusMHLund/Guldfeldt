@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Guldfeldt.Persistence;
+using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,11 +16,10 @@ using System.Windows.Shapes;
 
 namespace Guldfeldt.View.Notes
 {
-    /// <summary>
-    /// Interaction logic for EditNote.xaml
-    /// </summary>
     public partial class EditNote : Window
     {
+        MainViewModel mvm = new MainViewModel();
+        NoteRepo nr = new NoteRepo();
         public EditNote()
         {
             InitializeComponent();

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Guldfeldt.Model;
+using Guldfeldt.Persistence;
+using Guldfeldt.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Guldfeldt.View.Notes
 {
@@ -19,6 +23,9 @@ namespace Guldfeldt.View.Notes
     /// </summary>
     public partial class AddNote : Window
     {
+        MainViewModel mvm = new MainViewModel();
+        NoteRepo nr = new NoteRepo();
+
         public AddNote()
         {
             InitializeComponent();
@@ -26,6 +33,20 @@ namespace Guldfeldt.View.Notes
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
+            Close();
+        }
+
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Note note = new Note()
+            {
+            Title = WriteTitle_TextBox.Text,
+            NoteDescription = WriteNote_TextBox.Text,
+            MentorName = "Mentor",
+            Date = DateTime.Now,
+        };
+            nr.Create(note);
+            MessageBox.Show(" Note oprettet. ");
             Close();
         }
     }

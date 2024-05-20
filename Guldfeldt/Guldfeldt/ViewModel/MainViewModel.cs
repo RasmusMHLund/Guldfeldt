@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Guldfeldt.ViewModel
 {
@@ -73,23 +74,37 @@ namespace Guldfeldt.ViewModel
                 LoadEmployeesFromDatabase();
             }
         }
+        private ObservableCollection<Note> _notes;
+        public ObservableCollection<Note> Notes
+        {
+            get { return _notes; }
+            set
+            {
+                _notes = value;
+                OnPropertyChanged(nameof(Notes));
+            }
+        }
+        private Note _selectedNote;
+        public Note SelectedNote
+        {
+            get { return _selectedNote; }
+            set
+            {
+                _selectedNote = value;
+                OnPropertyChanged(nameof(SelectedNote));
+            }
+        }
 
         public MainViewModel()
         {
             Employees = new ObservableCollection<Employee>();
             Locations = new ObservableCollection<Location>();
+            Notes = new ObservableCollection<Note>();
             SelectedPickListItem = "Alle medarbejdere";
-            //SelectedLocation = new Location()
-            //{
-            //    Name = "Vælg lokation",
-            //    Address = null,
-            //    IsConstructionSite = false,
-            //    IsSchool = false,
-            //};
             
-
             LoadLocationsFromDatabase();
             LoadEmployeesFromDatabase();
+            LoadNotesFromDatabase();
         }
 
         private void LoadEmployeesFromDatabase()
@@ -133,6 +148,7 @@ namespace Guldfeldt.ViewModel
         }
         private void EmployeeQuery(SqlConnection con, string query) {
 
+            List<Employee> employeeList = new List<Employee>();
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -151,14 +167,25 @@ namespace Guldfeldt.ViewModel
                             IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
                             IsMentor = bool.Parse(dr["IsMentor"].ToString()),
                         };
-                        Employees.Add(employee);
+                        
+                        employeeList.Add(employee);
                     }
                 }
+            }
+            employeeList = employeeList.OrderBy(e => e.FullName).ToList();
+
+            Employees.Clear();
+
+            foreach (Employee employee in employeeList)
+            {
+                Employees.Add(employee);
             }
         }
 
         private void EmployeeFromLocationQuery(SqlConnection con, string query, string parameterName, string parameterValue)
         {
+            List<Employee> employeeList = new List<Employee>();
+
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue(parameterName, parameterValue);
@@ -179,12 +206,19 @@ namespace Guldfeldt.ViewModel
                             IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
                             IsMentor = bool.Parse(dr["IsMentor"].ToString()),
                         };
-                        
-                        
-                        Employees.Add(employee);
 
+
+                        employeeList.Add(employee);
                     }
                 }
+            }
+            employeeList = employeeList.OrderBy(e => e.FullName).ToList();
+
+            Employees.Clear();
+
+            foreach (Employee employee in employeeList)
+            {
+                Employees.Add(employee);
             }
         }
 
@@ -215,6 +249,30 @@ namespace Guldfeldt.ViewModel
             }
         }
 
+        public void LoadNotesFromDatabase()
+        {
+            string query = "SELECT * FROM NOTE";
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Note note = new Note
+                    {
+                        Title = dr["Title"].ToString(),
+                        NoteDescription = dr["noteDescription"].ToString(),
+                        MentorName = dr["MentorName"].ToString(),
+                        Date = DateTime.Parse(dr["Date"].ToString()),
+                    };
+                    Notes.Add(note);
+                }
+                con.Close();
+            }
+        }
     
             protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

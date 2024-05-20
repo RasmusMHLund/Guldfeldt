@@ -14,13 +14,14 @@ namespace Guldfeldt.Model
         public string MentorName { get; set; }
         public DateTime? Date { get; set; }
 
-        public Note(string title, string noteDescription, string mentorName, DateTime? date) 
-        { 
+        public Note(int noteId, string title, string noteDescription, string mentorName, DateTime? date) 
+        {
+            NoteId = noteId;
             Title = title;
             NoteDescription = noteDescription;
             MentorName = mentorName;
             Date = date;
         }
-        public Note() : this(null, null, null, null) { }
+        public Note() : this(0, null, null, null, null) { }
     }
 }
