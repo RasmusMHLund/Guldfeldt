@@ -14,12 +14,10 @@ namespace Guldfeldt.Persistence
     {
         string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
 
-
         private List<Note> Notes;
         public NoteRepo()
         {
             Notes = new List<Note>();
-
         }
         public void Create(Note noteToBeCreated)
         {
@@ -81,12 +79,14 @@ namespace Guldfeldt.Persistence
 
                 SqlCommand cmd = new SqlCommand("DELETE FROM NOTE WHERE NoteId = @NoteId", con);
                 cmd.Parameters.Add("@NoteId", SqlDbType.Int).Value = noteToBeDeleted.NoteId;
-                var deletedNoteId = Convert.ToInt32(cmd.ExecuteScalar());
-                if (deletedNoteId == noteToBeDeleted.NoteId)
+               
+                // cmd.ExecuteNonQuery();
+
+                var deleteNoteId = Convert.ToInt32(cmd.ExecuteScalar());
+                if (deleteNoteId == noteToBeDeleted.NoteId)
                 {
                     Notes.Remove(noteToBeDeleted);
-
-                } 
+                }
                 else 
                 {
                     throw new Exception("Sletning af note fejlet.");

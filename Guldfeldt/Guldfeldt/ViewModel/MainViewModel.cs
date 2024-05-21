@@ -1,4 +1,5 @@
 ﻿using Guldfeldt.Model;
+using Guldfeldt.Persistence;
 using Guldfeldt.View;
 using Microsoft.Data.SqlClient;
 using System;
@@ -17,6 +18,10 @@ namespace Guldfeldt.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        EmployeeRepo er = new EmployeeRepo();
+        LocationRepo lr = new LocationRepo();
+        NoteRepo nr = new NoteRepo();
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         string connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
