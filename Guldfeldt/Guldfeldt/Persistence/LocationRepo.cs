@@ -1,4 +1,5 @@
 ﻿using Guldfeldt.Model;
+using Guldfeldt.View;
 using Guldfeldt.ViewModel;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -13,12 +14,17 @@ namespace Guldfeldt.Persistence
 {
     public class LocationRepo
     {
+       
         string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
 
         private List<Location> Locations;
         public LocationRepo()
         {
             Locations = new List<Location>();
+        }
+        public List<Location> GetLocations()
+        {
+            return Locations;
         }
         public void Create(Location locationToBeCreated)
         {
@@ -34,15 +40,18 @@ namespace Guldfeldt.Persistence
                 cmd.Parameters.Add("@IsSchool", SqlDbType.Bit).Value = locationToBeCreated.IsSchool;
                 locationToBeCreated.LocationId = Convert.ToInt32(cmd.ExecuteScalar());
                 Locations.Add(locationToBeCreated);
+                
             }
         }
         public void RetrieveAll()
         {
+            List<Location> locationList = new List<Location>();
+            
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT Name, Address, IsConstructionSite, IsSchool FROM LOCATION", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM LOCATION", con);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -50,16 +59,25 @@ namespace Guldfeldt.Persistence
                     {
                         Location location = new Location()
                         {
+                            LocationId = int.Parse(dr["LocationId"].ToString()),
                             Name = dr["Name"].ToString(),
                             Address = dr["Address"].ToString(),
                             IsConstructionSite = bool.Parse(dr["IsConstructionSite"].ToString()),
                             IsSchool = bool.Parse(dr["IsSchool"].ToString()),
                         };
-                        Locations.Add(location);
+                        locationList.Add(location);
                     }
                 }
             }
+            locationList = locationList.OrderBy(e => e.Name).ToList();
+            Locations.Clear();
+
+            foreach (Location location in locationList)
+            {
+                Locations.Add(location);
+            }
         }
+    
         public void Update(Location locationToBeUpdated)
         {
             using (SqlConnection con = new SqlConnection(connectionString))

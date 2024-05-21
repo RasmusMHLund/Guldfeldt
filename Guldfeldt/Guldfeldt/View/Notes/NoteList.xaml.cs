@@ -30,6 +30,9 @@ namespace Guldfeldt.View.Notes
         {
             AddNote addNote = new AddNote();
             addNote.ShowDialog();
+           
+           
+            mvm.LoadNotesFromDatabase();
         }
 
         private void DeleteNote_Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +43,8 @@ namespace Guldfeldt.View.Notes
                 MessageBox.Show(" Note slettet. ");
 
             }
+            
+            mvm.LoadNotesFromDatabase();
 
         }
 

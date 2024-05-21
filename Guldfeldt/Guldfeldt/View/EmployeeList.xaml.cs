@@ -39,12 +39,15 @@ namespace Guldfeldt.View
         {
             AddLocation addLocation = new AddLocation();
             addLocation.ShowDialog();
+            mvm.LoadLocationsFromDatabase();
         }
 
         private void AddEmployee_Button_Click(object sender, RoutedEventArgs e)
         {
             AddEmployee addEmployee = new AddEmployee();
             addEmployee.ShowDialog();
+            mvm.LoadEmployeesFromDatabase();
+            
         }
 
         private void DeleteEmployee_Button_Click(object sender, RoutedEventArgs e)
@@ -54,7 +57,8 @@ namespace Guldfeldt.View
             er.Delete(mvm.SelectedEmployee);
             MessageBox.Show(" Medarbejder slettet. ");
 
-            }   
+            }
+            mvm.LoadEmployeesFromDatabase();
         }
         private void NoteList_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -185,6 +189,8 @@ namespace Guldfeldt.View
 
             lr.Delete(mvm.SelectedLocation);
             MessageBox.Show(" Lokation slettet. ");
+            mvm.LoadLocationsFromDatabase();
+
         }
     }
 }

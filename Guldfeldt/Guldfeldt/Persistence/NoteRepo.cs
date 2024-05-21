@@ -19,6 +19,11 @@ namespace Guldfeldt.Persistence
         {
             Notes = new List<Note>();
         }
+        public List<Note> GetNotes()
+        {
+            return Notes;
+        }
+
         public void Create(Note noteToBeCreated)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -37,11 +42,12 @@ namespace Guldfeldt.Persistence
         }
         public void RetrieveAll()
         {
+            List<Note> noteList = new List<Note>();
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT Title, NoteDescription, MentorName, Date FROM NOTE", con);
+                SqlCommand cmd = new SqlCommand("SELECT NoteId, Title, NoteDescription, MentorName, Date FROM NOTE", con);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -49,15 +55,23 @@ namespace Guldfeldt.Persistence
                     {
                         Note note = new Note()
                         {
-                            
+                            NoteId = int.Parse(dr["NoteId"].ToString()),
                             Title = dr["Title"].ToString(),
                             NoteDescription = dr["NoteDescription"].ToString(),
                             MentorName = dr["MentorName"].ToString(),
                             Date = DateTime.Parse(dr["Date"].ToString())
                         };
-                        Notes.Add(note);
+                        
+                        noteList.Add(note);
                     }
                 }
+            }
+            noteList = noteList.OrderBy(e => e.Title).ToList();
+            Notes.Clear();
+
+            foreach (Note note in noteList)
+            {
+                Notes.Add(note);
             }
         }
         public void Update(Note noteToBeUpdated)
@@ -79,19 +93,11 @@ namespace Guldfeldt.Persistence
 
                 SqlCommand cmd = new SqlCommand("DELETE FROM NOTE WHERE NoteId = @NoteId", con);
                 cmd.Parameters.Add("@NoteId", SqlDbType.Int).Value = noteToBeDeleted.NoteId;
-               
-                // cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+            }
 
-                var deleteNoteId = Convert.ToInt32(cmd.ExecuteScalar());
-                if (deleteNoteId == noteToBeDeleted.NoteId)
-                {
-                    Notes.Remove(noteToBeDeleted);
-                }
-                else 
-                {
-                    throw new Exception("Sletning af note fejlet.");
-                }
+            Notes.Remove(noteToBeDeleted);
+
             }
         }
     }
-}

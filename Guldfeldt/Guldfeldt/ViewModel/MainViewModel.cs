@@ -112,7 +112,7 @@ namespace Guldfeldt.ViewModel
             LoadNotesFromDatabase();
         }
 
-        private void LoadEmployeesFromDatabase()
+        public void LoadEmployeesFromDatabase()
         {
             Employees.Clear();
 
@@ -122,22 +122,22 @@ namespace Guldfeldt.ViewModel
                 switch (SelectedPickListItem)
                 {
                     case "Alle medarbejdere":
-                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE");
+                        EmployeeQuery("SELECT * FROM EMPLOYEE");
                         break;
                     case "Alle lærlinge":
-                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsApprentice = 'True'");
+                        EmployeeQuery("SELECT * FROM EMPLOYEE WHERE IsApprentice = 'True'");
                         break;
                     case "Alle svende":
-                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsJourneyman = 'True'");
+                        EmployeeQuery("SELECT * FROM EMPLOYEE WHERE IsJourneyman = 'True'");
                         break;
                     case "Alle mentorer":
-                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE WHERE IsMentor = 'True'");
+                        EmployeeQuery("SELECT * FROM EMPLOYEE WHERE IsMentor = 'True'");
                         break;
                     case "Lokation":
                        if (SelectedLocation != null)
                         {
                         string chosenLocation = SelectedLocation.Name;
-                        EmployeeFromLocationQuery(con, "SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = @CurrentWorkplace", "@CurrentWorkplace", chosenLocation);
+                        EmployeeFromLocationQuery("SELECT * FROM EMPLOYEE WHERE CurrentWorkplace = @CurrentWorkplace", "@CurrentWorkplace", chosenLocation);
 
                         } else
                         {
@@ -145,137 +145,53 @@ namespace Guldfeldt.ViewModel
                         } 
                         break;
                     default:
-                        EmployeeQuery(con, "SELECT * FROM EMPLOYEE");
+                        EmployeeQuery("SELECT * FROM EMPLOYEE");
                         break;
 
                 }
             }
         }
-        private void EmployeeQuery(SqlConnection con, string query) {
+        private void EmployeeQuery(string query)
+        { 
+            er.RetrieveAll(query);
 
-            List<Employee> employeeList = new List<Employee>();
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        Employee employee = new Employee
-                        {
-                            FullName = dr["FullName"].ToString(),
-                            PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
-                            Email = dr["Email"].ToString(),
-                            SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
-                            CurrentWorkplace = dr["CurrentWorkplace"].ToString(),
-                            SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
-                            IsApprentice = bool.Parse(dr["IsApprentice"].ToString()),
-                            IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
-                            IsMentor = bool.Parse(dr["IsMentor"].ToString()),
-                        };
-                        
-                        employeeList.Add(employee);
-                    }
-                }
-            }
-            employeeList = employeeList.OrderBy(e => e.FullName).ToList();
-
-            Employees.Clear();
-
-            foreach (Employee employee in employeeList)
+            foreach (var employee in er.GetEmployees())
             {
                 Employees.Add(employee);
             }
         }
 
-        private void EmployeeFromLocationQuery(SqlConnection con, string query, string parameterName, string parameterValue)
+        private void EmployeeFromLocationQuery(string query, string parameterName, string parameterValue)
         {
-            List<Employee> employeeList = new List<Employee>();
+            er.RetrieveAll(query, parameterName, parameterValue);
 
-            using (SqlCommand cmd = new SqlCommand(query, con))
-            {
-                cmd.Parameters.AddWithValue(parameterName, parameterValue);
-
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        Employee employee = new Employee
-                        {
-                            FullName = dr["FullName"].ToString(),
-                            PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
-                            Email = dr["Email"].ToString(),
-                            SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
-                            CurrentWorkplace = dr["CurrentWorkplace"].ToString(),
-                            SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
-                            IsApprentice = bool.Parse(dr["IsApprentice"].ToString()),
-                            IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
-                            IsMentor = bool.Parse(dr["IsMentor"].ToString()),
-                        };
-
-
-                        employeeList.Add(employee);
-                    }
-                }
-            }
-            employeeList = employeeList.OrderBy(e => e.FullName).ToList();
-
-            Employees.Clear();
-
-            foreach (Employee employee in employeeList)
+            foreach (var employee in er.GetEmployees())
             {
                 Employees.Add(employee);
             }
         }
 
-
-
-        private void LoadLocationsFromDatabase()
+        public void LoadLocationsFromDatabase()
         {
-            string query = "SELECT * FROM LOCATION";
+            Locations.Clear();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            lr.RetrieveAll();
+
+            foreach (var location in lr.GetLocations())
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                con.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    Location location = new Location 
-                    {
-                        Name = dr["Name"].ToString(),
-                        Address = dr["Address"].ToString(),
-                        IsConstructionSite = bool.Parse(dr["IsConstructionSite"].ToString()),
-                        IsSchool = bool.Parse(dr["IsSchool"].ToString()),
-                    };
-                    Locations.Add(location);
-                }
-                con.Close();
+                Locations.Add(location);
             }
         }
 
         public void LoadNotesFromDatabase()
         {
-            string query = "SELECT * FROM NOTE";
+            Notes.Clear();
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            nr.RetrieveAll();
+
+            foreach (var note in nr.GetNotes())
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                con.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                while (dr.Read())
-                {
-                    Note note = new Note
-                    {
-                        Title = dr["Title"].ToString(),
-                        NoteDescription = dr["noteDescription"].ToString(),
-                        MentorName = dr["MentorName"].ToString(),
-                        Date = DateTime.Parse(dr["Date"].ToString()),
-                    };
-                    Notes.Add(note);
-                }
-                con.Close();
+                Notes.Add(note);
             }
         }
     

@@ -19,9 +19,10 @@ namespace Guldfeldt.Persistence
         public EmployeeRepo()
         {
             Employees = new List<Employee>();
-
-         
-       
+        }
+        public List<Employee> GetEmployees()
+        {
+            return Employees;
         }
 
         public void Create(Employee employeeToBeCreated)
@@ -46,13 +47,15 @@ namespace Guldfeldt.Persistence
             }
         }
 
-        public void RetrieveAll()
+        public void RetrieveAll(string query)
         {
+            List<Employee> employeeList = new List<Employee>();
+
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT FullName, PhoneNumber, Email, SalaryNumber, CurrentWorkplace, SocialSecurityNumber, IsApprentice, IsJourneyman, IsMentor FROM EMPLOYEE", con);
+                SqlCommand cmd = new SqlCommand(query, con);
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -71,11 +74,63 @@ namespace Guldfeldt.Persistence
                             IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
                             IsMentor = bool.Parse(dr["IsMentor"].ToString()),
                         };
-                        Employees.Add(employee);
+                        employeeList.Add(employee);
                     }
                 }
             }
+            employeeList = employeeList.OrderBy(e => e.FullName).ToList();
+
+            Employees.Clear();
+
+            foreach (Employee employee in employeeList)
+            {
+                Employees.Add(employee);
+            }
         }
+        public void RetrieveAll(string query, string parameterName, string parameterValue)
+        {
+            List<Employee> employeeList = new List<Employee>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+
+                    cmd.Parameters.AddWithValue(parameterName, parameterValue);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Employee employee = new Employee()
+                            {
+
+                                FullName = dr["FullName"].ToString(),
+                                PhoneNumber = int.Parse(dr["PhoneNumber"].ToString()),
+                                Email = dr["Email"].ToString(),
+                                SalaryNumber = int.Parse(dr["SalaryNumber"].ToString()),
+                                CurrentWorkplace = dr["CurrentWorkplace"].ToString(),
+                                SocialSecurityNumber = dr["SocialSecurityNumber"].ToString(),
+                                IsApprentice = bool.Parse(dr["IsApprentice"].ToString()),
+                                IsJourneyman = bool.Parse(dr["IsJourneyman"].ToString()),
+                                IsMentor = bool.Parse(dr["IsMentor"].ToString()),
+                            };
+                            employeeList.Add(employee);
+                        }
+                    }
+                }
+            }
+            employeeList = employeeList.OrderBy(e => e.FullName).ToList();
+
+            Employees.Clear();
+
+            foreach (Employee employee in employeeList)
+            {
+                Employees.Add(employee);
+            }
+        }
+
 
         public void Update(Employee employeeToBeUpdated)
         {
