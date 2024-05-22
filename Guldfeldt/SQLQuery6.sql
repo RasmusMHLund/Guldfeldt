@@ -1,0 +1,4 @@
+﻿CREATE TABLE TIMEPERIOD (
+TimeperiodId Int IDENTITY(1,1) PRIMARY KEY,
+Period DateTime2,
+);

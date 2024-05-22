@@ -21,6 +21,7 @@ namespace Guldfeldt.ViewModel
         EmployeeRepo er = new EmployeeRepo();
         LocationRepo lr = new LocationRepo();
         NoteRepo nr = new NoteRepo();
+        TimeperiodRepo tr = new TimeperiodRepo();
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -100,16 +101,40 @@ namespace Guldfeldt.ViewModel
             }
         }
 
+        private ObservableCollection<Timeperiod> _timeperiods;
+        public ObservableCollection<Timeperiod> Timeperiods
+        {
+            get { return _timeperiods; }
+            set
+            {
+                _timeperiods = value;
+                OnPropertyChanged(nameof(Timeperiods));
+            }
+        }
+        private Note _selectedTimeperiod;
+        public Note SelectedTimeperiod
+        {
+            get { return _selectedTimeperiod; }
+            set
+            {
+                _selectedTimeperiod = value;
+                OnPropertyChanged(nameof(SelectedTimeperiod));
+            }
+        }
+
+
         public MainViewModel()
         {
             Employees = new ObservableCollection<Employee>();
             Locations = new ObservableCollection<Location>();
             Notes = new ObservableCollection<Note>();
+            Timeperiods = new ObservableCollection<Timeperiod>();
             SelectedPickListItem = "Alle medarbejdere";
             
             LoadLocationsFromDatabase();
             LoadEmployeesFromDatabase();
             LoadNotesFromDatabase();
+            LoadTimeperiodsFromDatabase();
         }
 
         public void LoadEmployeesFromDatabase()
@@ -171,6 +196,7 @@ namespace Guldfeldt.ViewModel
             }
         }
 
+
         public void LoadLocationsFromDatabase()
         {
             Locations.Clear();
@@ -192,6 +218,18 @@ namespace Guldfeldt.ViewModel
             foreach (var note in nr.GetNotes())
             {
                 Notes.Add(note);
+            }
+        }
+
+        public void LoadTimeperiodsFromDatabase()
+        {
+            Timeperiods.Clear();
+
+            tr.RetrieveAll();
+
+            foreach (var timeperiod in tr.GetTimeperiods())
+            {
+                Timeperiods.Add(timeperiod);
             }
         }
     

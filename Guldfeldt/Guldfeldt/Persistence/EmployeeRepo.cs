@@ -14,16 +14,12 @@ namespace Guldfeldt.Persistence
     {
         string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
 
-
         private List<Employee> Employees;
         public EmployeeRepo()
         {
             Employees = new List<Employee>();
         }
-        public List<Employee> GetEmployees()
-        {
-            return Employees;
-        }
+        public List<Employee> GetEmployees()   { return Employees; }
 
         public void Create(Employee employeeToBeCreated)
         {
@@ -131,7 +127,6 @@ namespace Guldfeldt.Persistence
             }
         }
 
-
         public void Update(Employee employeeToBeUpdated)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -139,7 +134,15 @@ namespace Guldfeldt.Persistence
                 con.Open();
 
                 SqlCommand cmd = new SqlCommand("UPDATE EMPLOYEE SET FullName = @FullName, PhoneNumber = @PhoneNumber, Email = @Email, SalaryNumber = @SalaryNumber, CurrentWorkplace = @CurrentWorkplace, SocialSecurityNumber = @SocialSecurityNumber, IsApprentice = @IsApprentice, IsJourneyman = @IsJourneyman, IsMentor = @IsMentor WHERE SalaryNumber = @SalaryNumber", con);
-                cmd.Parameters.Add("@SalaryNumber", SqlDbType.NVarChar).Value = employeeToBeUpdated.SalaryNumber;
+                cmd.Parameters.Add("@FullName", SqlDbType.NVarChar).Value = (object)employeeToBeUpdated.FullName ?? DBNull.Value;
+                cmd.Parameters.Add("@PhoneNumber", SqlDbType.Int).Value = (object)employeeToBeUpdated.PhoneNumber ?? DBNull.Value;
+                cmd.Parameters.Add("@Email", SqlDbType.NVarChar).Value = (object)employeeToBeUpdated.Email ?? DBNull.Value;
+                cmd.Parameters.Add("@SalaryNumber", SqlDbType.Int).Value = (object)employeeToBeUpdated.SalaryNumber ?? DBNull.Value;
+                cmd.Parameters.Add("@CurrentWorkplace", SqlDbType.NVarChar).Value = (object)employeeToBeUpdated.CurrentWorkplace ?? DBNull.Value;
+                cmd.Parameters.Add("@SocialSecurityNumber", SqlDbType.NVarChar).Value = (object)employeeToBeUpdated.SocialSecurityNumber ?? DBNull.Value;
+                cmd.Parameters.Add("@IsApprentice", SqlDbType.Bit).Value = employeeToBeUpdated.IsApprentice;
+                cmd.Parameters.Add("@IsJourneyman", SqlDbType.Bit).Value = employeeToBeUpdated.IsJourneyman;
+                cmd.Parameters.Add("@IsMentor", SqlDbType.Bit).Value = employeeToBeUpdated.IsMentor;
                 cmd.ExecuteNonQuery();
             }
         }

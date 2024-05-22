@@ -23,11 +23,19 @@ namespace Guldfeldt.View.Notes
         public EditNote()
         {
             InitializeComponent();
+            
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            nr.Update(mvm.SelectedNote);
+
+            mvm.LoadNotesFromDatabase();
         }
     }
 }

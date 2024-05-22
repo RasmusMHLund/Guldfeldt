@@ -82,6 +82,10 @@ namespace Guldfeldt.Persistence
 
                 SqlCommand cmd = new SqlCommand("UPDATE NOTE SET Title = @Title, NoteDescription = @NoteDescription, MentorName = @MentorName, Date = @Date WHERE NoteId = @NoteId", con);
                 cmd.Parameters.Add("@NoteId", SqlDbType.Int).Value = noteToBeUpdated.NoteId;
+                cmd.Parameters.Add("@Title", SqlDbType.NVarChar).Value = noteToBeUpdated.Title;
+                cmd.Parameters.Add("@NoteDescription", SqlDbType.NVarChar).Value = noteToBeUpdated.NoteDescription;
+                cmd.Parameters.Add("@MentorName", SqlDbType.NVarChar).Value = noteToBeUpdated.MentorName;
+                cmd.Parameters.Add("@Date", SqlDbType.DateTime2).Value = noteToBeUpdated.Date;
                 cmd.ExecuteNonQuery();
             }
         }

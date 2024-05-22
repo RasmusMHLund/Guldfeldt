@@ -110,7 +110,6 @@ namespace Guldfeldt.View
             if (Journeyman_CheckBox.IsEnabled)
             {
                 Mentor_Checkbox.IsEnabled = true;
-                ApprenticeList_ComboBox.IsEnabled = true;
             }
 
             Save_Button.IsEnabled = true;
@@ -144,21 +143,13 @@ namespace Guldfeldt.View
         {
             
             Mentor_Checkbox.Visibility = Visibility.Hidden;
-            ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
             NoteList_Button.Visibility = Visibility.Visible;
         }
         private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             
             Mentor_Checkbox.Visibility = Visibility.Visible;
-            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
             NoteList_Button.Visibility = Visibility.Hidden;
-        }
-
-        private void Mentor_Checkbox_Checked(object sender, RoutedEventArgs e)
-        {
-            
-            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
         }
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
@@ -173,20 +164,20 @@ namespace Guldfeldt.View
             Journeyman_CheckBox.IsEnabled = false;
 
             Mentor_Checkbox.IsEnabled = false;
-            ApprenticeList_ComboBox.IsEnabled = false;
 
             Save_Button.IsEnabled = false;
             Save_Button.Visibility = Visibility.Hidden;
 
+
+            er.Update(mvm.SelectedEmployee);
+            mvm.LoadEmployeesFromDatabase();
+
+
             MessageBox.Show(" Ændring gemt. ");
         }
 
-
-
         private void LocationSchedule_Button_Click(object sender, RoutedEventArgs e)
         {
-            
-
             lr.Delete(mvm.SelectedLocation);
             MessageBox.Show(" Lokation slettet. ");
             mvm.LoadLocationsFromDatabase();
