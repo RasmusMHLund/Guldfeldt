@@ -23,6 +23,9 @@ namespace Guldfeldt.ViewModel
         NoteRepo nr = new NoteRepo();
         TimeperiodRepo tr = new TimeperiodRepo();
 
+        public string? SelectedBox { get; set; }
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         string connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
@@ -166,7 +169,7 @@ namespace Guldfeldt.ViewModel
 
                         } else
                         {
-                            MessageBox.Show(" Vælg en lokation. ");
+                            EmployeeQuery("SELECT * FROM EMPLOYEE");
                         } 
                         break;
                     default:
@@ -196,6 +199,15 @@ namespace Guldfeldt.ViewModel
             }
         }
 
+        public void LoadEmployeesFromSearch(string filter)
+        {
+            er.RetrieveAll("SELECT * FROM EMPLOYEE WHERE FullName = @FullName", "@FullName", filter);
+
+            foreach (var employee in er.GetEmployees())
+            {
+                Employees.Add(employee);
+            }
+        }
 
         public void LoadLocationsFromDatabase()
         {

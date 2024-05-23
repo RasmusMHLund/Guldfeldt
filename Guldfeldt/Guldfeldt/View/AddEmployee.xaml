@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:adorners="http://gu.se/Adorners"
         xmlns:local="clr-namespace:Guldfeldt.View"
         mc:Ignorable="d"
         Title="AddEmployee" Height="520" Width="460" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
@@ -12,25 +13,42 @@
                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             </Border>
         </ControlTemplate>
+        <Style x:Key="TextBoxFocusStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="Transparent" TargetName="PART_ContentHost"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
         <Grid HorizontalAlignment="Left" Height="432" Margin="30,30,0,0" VerticalAlignment="Top" Width="398" Background="#FFEAEAEA">
             <Label x:Name="EmployeeInformation_Label" Content="Medarbejder information" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" FontSize="16" Width="193"/>
-            <TextBox x:Name="FullName_TextBox" HorizontalAlignment="Center" Margin="0,33,0,0" TextWrapping="Wrap" Text="Fuldt navn" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
-            <TextBox x:Name="PhoneNumber_TextBox" HorizontalAlignment="Center" Margin="0,73,0,0" TextWrapping="Wrap" Text="Telefonnummer" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
-            <TextBox x:Name="Email_TextBox" HorizontalAlignment="Center" Margin="0,113,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
-            <TextBox x:Name="SalaryNumber_TextBox" HorizontalAlignment="Center" Margin="0,153,0,0" TextWrapping="Wrap" Text="Lønnummer" VerticalAlignment="Top" Width="378" Height="29" VerticalContentAlignment="Top" FontSize="14" Background="#FFC7C7C7"/>
-            <TextBox x:Name="SocialSecurityNumber_TextBox" HorizontalAlignment="Center" Margin="0,193,0,0" TextWrapping="Wrap" Text="CPR-Nummer" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="FullName_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" Margin="0,33,0,0" TextWrapping="Wrap" adorners:Watermark.Text="Fuldt navn" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="PhoneNumber_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" Margin="0,73,0,0" TextChanged="TextChanged"  TextWrapping="Wrap" adorners:Watermark.Text="Telefonnummer" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="Email_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" Margin="0,113,0,0" TextWrapping="Wrap" adorners:Watermark.Text="Email" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="SalaryNumber_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" TextChanged="TextChanged" Margin="0,153,0,0" TextWrapping="Wrap" adorners:Watermark.Text="Lønnummer" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="378" Height="29" VerticalContentAlignment="Top" FontSize="14" Background="#FFC7C7C7"/>
+            <TextBox x:Name="SocialSecurityNumber_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" Margin="0,193,0,0" TextWrapping="Wrap" adorners:Watermark.Text="CPR-nummer" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7"/>
+            <ComboBox x:Name="CurrentWorkplace_ComboBox" HorizontalAlignment="Center" Margin="0,234,0,0" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" adorners:Watermark.Text="Lokation" adorners:Watermark.VisibleWhen="Empty" ItemsSource="{Binding Locations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedLocation}"/>
 
             <CheckBox x:Name="Apprentice_CheckBox" Content="Lærling" HorizontalAlignment="Left" Margin="10,272,0,0" VerticalAlignment="Top" Height="20" Width="93" FontSize="14" Checked="Apprentice_CheckBox_Checked"/>
             <CheckBox x:Name="Journeyman_CheckBox" Content="Svend" HorizontalAlignment="Left" Height="20" Margin="10,297,0,0" VerticalAlignment="Top" Width="93" FontSize="14" Checked="Journeyman_CheckBox_Checked"/>
-            <CheckBox x:Name="Mentor_Checkbox" Content="Mentor" HorizontalAlignment="Left" Height="20" Margin="295,272,0,0" VerticalAlignment="Top" Width="93" FontSize="14" Visibility="Hidden" Checked="Mentor_Checkbox_Checked"/>
-            <ComboBox x:Name="ApprenticeList_ComboBox" HorizontalAlignment="Left" Margin="210,295,0,0" VerticalAlignment="Top" Width="178" Visibility="Hidden"/>
-
+            <CheckBox x:Name="Mentor_Checkbox" Content="Mentor" HorizontalAlignment="Left" Height="20" Margin="295,272,0,0" VerticalAlignment="Top" Width="93" FontSize="14" Visibility="Hidden"/>
+            
             <Button x:Name="Cancel_Button" Content="Annuller" HorizontalAlignment="Left" Margin="10,390,0,0" VerticalAlignment="Top" Height="25" Width="93" Template="{StaticResource MouseOverBackground}" Background="#FFA0A0A0" Foreground="White" FontSize="14" Click="Cancel_Button_Click" BorderBrush="#FFA0A0A0"/>
             <Button x:Name="Add_Button" Content="Tilføj" HorizontalAlignment="Left" Margin="295,390,0,0" VerticalAlignment="Top" Height="25" Width="93" Template="{StaticResource MouseOverBackground}" Background="#FF5E5B5B" Foreground="White" FontSize="14" BorderBrush="#FF5E5B5B" Click="Add_Button_Click" />
-            <ComboBox x:Name="CurrentWorkplace_ComboBox" HorizontalAlignment="Center" Margin="0,234,0,0" VerticalAlignment="Top" Width="378" Height="29" ItemsSource="{Binding Locations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedLocation}"/>
         </Grid>
     </Grid>
 </Window>

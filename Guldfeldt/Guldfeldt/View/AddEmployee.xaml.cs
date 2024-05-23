@@ -29,9 +29,23 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
             DataContext = mvm;
-
+            ApplyHoverEffect(Add_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(Cancel_Button, defaultbrush, hoverbrush);
         }
-
+        SolidColorBrush defaultbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 94, 91, 91));
+        SolidColorBrush hoverbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 136, 133, 133));
+        private void ApplyHoverEffect(Button button, SolidColorBrush defaultBrush, SolidColorBrush hoverBrush)
+        {
+            button.Background = defaultBrush;
+            button.MouseEnter += (sender, e) =>
+            {
+                button.Background = hoverBrush;
+            };
+            button.MouseLeave += (sender, e) =>
+            {
+                button.Background = defaultBrush;
+            };
+        }
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -56,25 +70,56 @@ namespace Guldfeldt.View
             MessageBox.Show(" Medarbejder oprettet. ");
             Close();
         }
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox? textBox = sender as TextBox;
+            mvm.SelectedBox = textBox?.Name;
 
+            string final = "";
+            foreach (char c in textBox.Text)
+            {
+                if (Char.IsDigit(c))
+                {
+                    final += c;
+                }
+                else
+                {
+                    string error = "Forkert input. Kun tal accepteret.";
+                    MessageBox.Show(error);
+                }
+            }
+            List<int> salaryNumbers = new List<int>();
+            foreach (var employee in er.GetEmployees())
+            {
+                salaryNumbers.Add(employee.SalaryNumber);
+            }
+            int salaryNumber;
+            bool isNumber = int.TryParse(textBox.Text, out salaryNumber);
+
+                if (isNumber && salaryNumbers.Contains(salaryNumber))
+                {
+                    string error = " Lønnummeret eksisterer allerede. ";
+                    MessageBox.Show(error);
+                }
+                else
+                {
+                    MessageBox.Show("Salary number not found or invalid input.");
+                }
+            }
+        
         private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Journeyman_CheckBox.IsChecked = false;
             Mentor_Checkbox.Visibility = Visibility.Hidden;
-            ApprenticeList_ComboBox.Visibility = Visibility.Hidden;
         }
 
         private void Journeyman_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Apprentice_CheckBox.IsChecked = false;
             Mentor_Checkbox.Visibility = Visibility.Visible;
-            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
 
         }
 
-        private void Mentor_Checkbox_Checked(object sender, RoutedEventArgs e)
-        {
-            ApprenticeList_ComboBox.Visibility = Visibility.Visible;
-        }
+
     }
 }

@@ -33,8 +33,28 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
             DataContext = mvm;
+            ApplyHoverEffect(AddEmployee_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(DeleteEmployee_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(CreateLocation_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(EditLocation_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(NoteList_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(LocationSchedule_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(EmployeeCalender_Button, defaultbrush, hoverbrush);
         }
-
+        SolidColorBrush defaultbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 94, 91, 91));
+        SolidColorBrush hoverbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 136, 133, 133));
+        private void ApplyHoverEffect(Button button, SolidColorBrush defaultBrush, SolidColorBrush hoverBrush)
+        {
+            button.Background = defaultBrush;
+            button.MouseEnter += (sender, e) =>
+            {
+                button.Background = hoverBrush;
+            };
+            button.MouseLeave += (sender, e) =>
+            {
+                button.Background = defaultBrush;
+            };
+        }
         private void CreateLocation_Button_Click(object sender, RoutedEventArgs e)
         {
             AddLocation addLocation = new AddLocation();
@@ -96,14 +116,41 @@ namespace Guldfeldt.View
                 }
             }
         }  
+        private void ListFilter_TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            string filterText = ListFilter_TextBox.Text;
+            mvm.LoadEmployeesFromSearch(filterText);
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox? textBox = sender as TextBox;
+            mvm.SelectedBox = textBox?.Name;
+
+            string final = "";
+            foreach (char c in textBox.Text)
+            {
+                if (Char.IsDigit(c))
+                {
+                    final += c;
+                }
+                else
+                {
+                    string error = "Forkert input. Kun tal accepteret.";
+                    MessageBox.Show(error);
+                }
+            }
+        }
+
         private void EditEmployeeInformation_Button_Click(object sender, RoutedEventArgs e)
         {
-            FullName_TextBox.IsEnabled = true;
-            PhoneNumber_TextBox.IsEnabled = true;
-            Email_TextBox.IsEnabled = true;
-            SalaryNumber_TextBox.IsEnabled = true;
-            CurrentWorkplace_TextBox.IsEnabled = true;
-            SocialSecurityNumber_TextBox.IsEnabled = true;
+            FullName_TextBox.IsReadOnly = false;
+            PhoneNumber_TextBox.IsReadOnly = false;
+            Email_TextBox.IsReadOnly = false;
+            SalaryNumber_TextBox.IsReadOnly = false;
+            CurrentWorkplace_ComboBox.IsEnabled = true;
+            SocialSecurityNumber_TextBox.IsReadOnly = false;
             Apprentice_CheckBox.IsEnabled = true;
             Journeyman_CheckBox.IsEnabled = true;
 
@@ -154,12 +201,12 @@ namespace Guldfeldt.View
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            FullName_TextBox.IsEnabled = false;
-            PhoneNumber_TextBox.IsEnabled = false;
-            Email_TextBox.IsEnabled = false;
-            SalaryNumber_TextBox.IsEnabled = false;
-            CurrentWorkplace_TextBox.IsEnabled = false;
-            SocialSecurityNumber_TextBox.IsEnabled = false;
+            FullName_TextBox.IsReadOnly = true;
+            PhoneNumber_TextBox.IsReadOnly = true;
+            Email_TextBox.IsReadOnly = true;
+            SalaryNumber_TextBox.IsReadOnly = true;
+            CurrentWorkplace_ComboBox.IsEnabled = false;
+            SocialSecurityNumber_TextBox.IsReadOnly = true;
             Apprentice_CheckBox.IsEnabled = false;
             Journeyman_CheckBox.IsEnabled = false;
 
@@ -183,6 +230,11 @@ namespace Guldfeldt.View
             mvm.LoadLocationsFromDatabase();
 
         }
+        // #FF5E5B5B normal farve
+        // #FF888585 hover farve
+
+
+
     }
 }
 

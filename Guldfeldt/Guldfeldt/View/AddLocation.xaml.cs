@@ -28,6 +28,22 @@ namespace Guldfeldt.View
         {
             InitializeComponent();
             DataContext = mvm;
+            ApplyHoverEffect(Add_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(Cancel_Button, defaultbrush, hoverbrush);
+        }
+        SolidColorBrush defaultbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 94, 91, 91));
+        SolidColorBrush hoverbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 136, 133, 133));
+        private void ApplyHoverEffect(Button button, SolidColorBrush defaultBrush, SolidColorBrush hoverBrush)
+        {
+            button.Background = defaultBrush;
+            button.MouseEnter += (sender, e) =>
+            {
+                button.Background = hoverBrush;
+            };
+            button.MouseLeave += (sender, e) =>
+            {
+                button.Background = defaultBrush;
+            };
         }
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
@@ -49,5 +65,6 @@ namespace Guldfeldt.View
             Close();
             
         }
+
     }
 }

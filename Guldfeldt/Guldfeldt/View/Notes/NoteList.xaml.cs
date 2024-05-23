@@ -20,10 +20,29 @@ namespace Guldfeldt.View.Notes
     {
         MainViewModel mvm = new MainViewModel();
         NoteRepo nr = new NoteRepo();
+
         public NoteList()
         {
             InitializeComponent();
             DataContext = mvm;
+            ApplyHoverEffect(AddNote_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(DeleteNote_Button, defaultbrush, hoverbrush);
+            ApplyHoverEffect(EditNote_Button, defaultbrush, hoverbrush);
+
+        }
+        SolidColorBrush defaultbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 94, 91, 91));
+        SolidColorBrush hoverbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 136, 133, 133));
+        private void ApplyHoverEffect(Button button, SolidColorBrush defaultBrush, SolidColorBrush hoverBrush)
+        {
+            button.Background = defaultBrush;
+            button.MouseEnter += (sender, e) =>
+            {
+                button.Background = hoverBrush;
+            };
+            button.MouseLeave += (sender, e) =>
+            {
+                button.Background = defaultBrush;
+            };
         }
 
         private void AddNote_Button_Click(object sender, RoutedEventArgs e)
@@ -41,17 +60,16 @@ namespace Guldfeldt.View.Notes
             {
                 nr.Delete(mvm.SelectedNote);
                 MessageBox.Show(" Note slettet. ");
-
             }
-            
             mvm.LoadNotesFromDatabase();
-
         }
 
         private void EditNote_Button_Click(object sender, RoutedEventArgs e)
         {
-            EditNote editNote = new EditNote();
-            editNote.ShowDialog();
+            Title_TextBox.IsReadOnly = false;
+            NoteDescription_TextBox.IsReadOnly = false;
+            Save_Button.IsEnabled = true;
+            Save_Button.Visibility = Visibility.Visible;
         }
 
         private void Back_Button_Click(object sender, RoutedEventArgs e)
@@ -79,6 +97,21 @@ namespace Guldfeldt.View.Notes
                         break;
                 }
             }
+        }
+
+        private void Save_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Title_TextBox.IsReadOnly = true;
+            NoteDescription_TextBox.IsReadOnly = true;  
+            Save_Button.IsEnabled = false;
+            Save_Button.Visibility = Visibility.Hidden;
+
+
+            nr.Update(mvm.SelectedNote);
+            mvm.LoadNotesFromDatabase();
+
+
+            MessageBox.Show(" Ændring gemt. ");
         }
     }
 }

@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:adorners="http://gu.se/Adorners"
+
         xmlns:local="clr-namespace:Guldfeldt.View"
         mc:Ignorable="d"
         Title="EditWorkplace" Height="240" Width="460" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
@@ -12,11 +14,29 @@
                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             </Border>
         </ControlTemplate>
+        <Style x:Key="TextBoxFocusStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="Transparent" TargetName="PART_ContentHost"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid HorizontalAlignment="Center" Height="157" Margin="0,30,0,0" VerticalAlignment="Top" Width="398" Background="#FFEAEAEA">
-            <TextBox x:Name="LocationName_TextBox" HorizontalAlignment="Center" Margin="0,13,0,0" TextWrapping="Wrap" Text="{Binding SelectedLocation.Name}" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="LocationAddress_TextBox" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SelectedLocation.Address}" VerticalAlignment="Top" Width="378" Height="30" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center" Margin="0,50,0,0"/>
+            <TextBox x:Name="LocationName_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" Margin="0,13,0,0" TextWrapping="Wrap" Text="{Binding SelectedLocation.Name}" VerticalAlignment="Top" Width="378" Height="29" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="LocationAddress_TextBox" Style="{StaticResource TextBoxFocusStyle}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SelectedLocation.Address}" VerticalAlignment="Top" Width="378" Height="30" FontSize="14" Background="#FFC7C7C7" VerticalContentAlignment="Center" Margin="0,50,0,0"/>
             <CheckBox x:Name="IsSchool_CheckBox" Content="Skole" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Height="20" Width="102" FontSize="14" IsChecked="{Binding SelectedLocation.IsSchool}"/>
             <CheckBox x:Name="IsConstructionSite_CheckBox" Content="Byggeplads" HorizontalAlignment="Left" Margin="286,85,0,0" VerticalAlignment="Top" Height="20" Width="102" FontSize="14" IsChecked="{Binding SelectedLocation.IsConstructionSite}"/>
 
