@@ -88,25 +88,7 @@ namespace Guldfeldt.View
                     MessageBox.Show(error);
                 }
             }
-            List<int> salaryNumbers = new List<int>();
-            foreach (var employee in er.GetEmployees())
-            {
-                salaryNumbers.Add(employee.SalaryNumber);
-            }
-            int salaryNumber;
-            bool isNumber = int.TryParse(textBox.Text, out salaryNumber);
-
-                if (isNumber && salaryNumbers.Contains(salaryNumber))
-                {
-                    string error = " Lønnummeret eksisterer allerede. ";
-                    MessageBox.Show(error);
-                }
-                else
-                {
-                    MessageBox.Show("Salary number not found or invalid input.");
-                }
-            }
-        
+        }
         private void Apprentice_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Journeyman_CheckBox.IsChecked = false;

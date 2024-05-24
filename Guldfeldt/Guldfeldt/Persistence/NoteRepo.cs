@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Windows.Forms;
 
 namespace Guldfeldt.Persistence
 {
@@ -40,7 +41,7 @@ namespace Guldfeldt.Persistence
                 Notes.Add(noteToBeCreated);
             }
         }
-        public void RetrieveAll()
+        public void RetrieveAll(string sortOrder)
         {
             List<Note> noteList = new List<Note>();
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -66,7 +67,21 @@ namespace Guldfeldt.Persistence
                     }
                 }
             }
-            noteList = noteList.OrderBy(e => e.Title).ToList();
+            switch (sortOrder )
+            {
+                case "Nyeste":
+                    noteList = noteList.OrderByDescending(n => n.Date).ToList();
+                    break;
+                case "Ældste":
+                    noteList = noteList.OrderBy(n => n.Date).ToList();
+                    break;
+                case "A-Z":
+                    noteList = noteList.OrderBy(n => n.Title).ToList();
+                    break;
+                case "Z-A":
+                    noteList = noteList.OrderByDescending(n => n.Title).ToList();
+                    break;
+            }
             Notes.Clear();
 
             foreach (Note note in noteList)
@@ -74,7 +89,59 @@ namespace Guldfeldt.Persistence
                 Notes.Add(note);
             }
         }
-        public void Update(Note noteToBeUpdated)
+
+        public void RetrieveAll(string query, string parameterName, string parameterValue, string sortOrder)
+        {
+            List<Note> noteList = new List<Note>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue(parameterName, parameterValue);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Note note = new Note()
+                            {
+                                NoteId = int.Parse(dr["NoteId"].ToString()),
+                                Title = dr["Title"].ToString(),
+                                NoteDescription = dr["NoteDescription"].ToString(),
+                                MentorName = dr["MentorName"].ToString(),
+                                Date = DateTime.Parse(dr["Date"].ToString())
+                            };
+
+                            noteList.Add(note);
+                        }
+                    }
+                }
+                switch (sortOrder)
+                {
+                    case "Nyeste":
+                        noteList = noteList.OrderByDescending(n => n.Date).ToList();
+                        break;
+                    case "Ældste":
+                        noteList = noteList.OrderBy(n => n.Date).ToList();
+                        break;
+                    case "A-Z":
+                        noteList = noteList.OrderBy(n => n.Title).ToList();
+                        break;
+                    case "Z-A":
+                        noteList = noteList.OrderByDescending(n => n.Title).ToList();
+                        break;
+                }
+                Notes.Clear();
+
+                foreach (Note note in noteList)
+                {
+                    Notes.Add(note);
+                }
+            }
+        }
+            public void Update(Note noteToBeUpdated)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {

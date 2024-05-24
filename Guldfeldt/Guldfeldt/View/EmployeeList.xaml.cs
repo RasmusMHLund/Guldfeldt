@@ -40,6 +40,7 @@ namespace Guldfeldt.View
             ApplyHoverEffect(NoteList_Button, defaultbrush, hoverbrush);
             ApplyHoverEffect(LocationSchedule_Button, defaultbrush, hoverbrush);
             ApplyHoverEffect(EmployeeCalender_Button, defaultbrush, hoverbrush);
+            mvm.LoadLocationsFromDatabase();
         }
         SolidColorBrush defaultbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 94, 91, 91));
         SolidColorBrush hoverbrush = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 136, 133, 133));
@@ -88,8 +89,9 @@ namespace Guldfeldt.View
 
         private void EditLocation_Button_Click(object sender, RoutedEventArgs e)
         {
-            EditLocation editLocation = new EditLocation();
+            EditLocation editLocation = new EditLocation(mvm.SelectedLocation);
             editLocation.ShowDialog();
+            mvm.LoadLocationsFromDatabase();
         }
         private void PickList_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -134,6 +136,7 @@ namespace Guldfeldt.View
                 if (Char.IsDigit(c))
                 {
                     final += c;
+                   
                 }
                 else
                 {
@@ -153,11 +156,8 @@ namespace Guldfeldt.View
             SocialSecurityNumber_TextBox.IsReadOnly = false;
             Apprentice_CheckBox.IsEnabled = true;
             Journeyman_CheckBox.IsEnabled = true;
-
-            if (Journeyman_CheckBox.IsEnabled)
-            {
-                Mentor_Checkbox.IsEnabled = true;
-            }
+            Mentor_Checkbox.IsEnabled = true;
+            
 
             Save_Button.IsEnabled = true;
             Save_Button.Visibility = Visibility.Visible;
@@ -225,16 +225,8 @@ namespace Guldfeldt.View
 
         private void LocationSchedule_Button_Click(object sender, RoutedEventArgs e)
         {
-            lr.Delete(mvm.SelectedLocation);
-            MessageBox.Show(" Lokation slettet. ");
-            mvm.LoadLocationsFromDatabase();
 
         }
-        // #FF5E5B5B normal farve
-        // #FF888585 hover farve
-
-
-
     }
 }
 

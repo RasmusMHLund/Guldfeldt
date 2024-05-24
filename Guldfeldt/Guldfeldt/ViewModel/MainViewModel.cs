@@ -38,6 +38,35 @@ namespace Guldfeldt.ViewModel
             "Alle mentorer",
             "Lokation"
         };
+        private string _selectedPickListItem;
+        public string SelectedPickListItem
+        {
+            get { return _selectedPickListItem; }
+            set
+            { _selectedPickListItem = value;
+                OnPropertyChanged(nameof(SelectedPickListItem));
+                LoadEmployeesFromDatabase(); }
+        }
+
+        public ObservableCollection<string> SortNoteItems { get; } = new ObservableCollection<string>
+        {
+            "A-Z",
+            "Z-A",
+            "Nyeste",
+            "Ældste",
+        };
+        private string _selectedSortNoteItem;
+        public string SelectedSortNoteItem
+        {
+            get { return _selectedSortNoteItem; }
+            set
+            {
+                _selectedSortNoteItem = value;
+                OnPropertyChanged(nameof(SelectedSortNoteItem));
+                LoadNotesFromDatabase();
+            }
+        }
+
         private ObservableCollection<Employee> _employees;
         public ObservableCollection<Employee> Employees
         {
@@ -53,16 +82,6 @@ namespace Guldfeldt.ViewModel
             set { _selectedEmployee = value;
                 OnPropertyChanged(nameof(SelectedEmployee));
             }
-        }
-
-        private string _selectedPickListItem;
-        public string SelectedPickListItem
-        {
-            get { return _selectedPickListItem; }
-            set
-            { _selectedPickListItem = value;
-                OnPropertyChanged(nameof(SelectedPickListItem));
-                LoadEmployeesFromDatabase(); }
         }
 
         private ObservableCollection<Location> _locations;
@@ -133,6 +152,7 @@ namespace Guldfeldt.ViewModel
             Notes = new ObservableCollection<Note>();
             Timeperiods = new ObservableCollection<Timeperiod>();
             SelectedPickListItem = "Alle medarbejdere";
+            SelectedSortNoteItem = "A-Z";
             
             LoadLocationsFromDatabase();
             LoadEmployeesFromDatabase();
@@ -201,11 +221,31 @@ namespace Guldfeldt.ViewModel
 
         public void LoadEmployeesFromSearch(string filter)
         {
-            er.RetrieveAll("SELECT * FROM EMPLOYEE WHERE FullName = @FullName", "@FullName", filter);
+            string query = "SELECT * FROM EMPLOYEE WHERE FullName LIKE @FullName";
+            string parameter = "%" + filter + "%";
+
+            er.RetrieveAll(query, "@FullName", parameter);
+
+            Employees.Clear();
 
             foreach (var employee in er.GetEmployees())
             {
                 Employees.Add(employee);
+            }
+        }   
+
+        public void LoadNotesFromSearch(string filter)
+        {
+            string query = "SELECT * FROM NOTE WHERE Title LIKE @Title";
+            string parameter = "%" + filter + "%";
+
+            nr.RetrieveAll(query, "@Title", parameter,SelectedSortNoteItem);
+
+            Notes.Clear();
+
+            foreach (var note in nr.GetNotes())
+            {
+                Notes.Add(note);
             }
         }
 
@@ -225,7 +265,7 @@ namespace Guldfeldt.ViewModel
         {
             Notes.Clear();
 
-            nr.RetrieveAll();
+            nr.RetrieveAll(SelectedSortNoteItem);
 
             foreach (var note in nr.GetNotes())
             {

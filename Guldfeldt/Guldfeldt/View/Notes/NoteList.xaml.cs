@@ -77,28 +77,6 @@ namespace Guldfeldt.View.Notes
             Close();
         }
 
-        private void SortBy_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (SortBy_ComboBox.SelectedItem != null)
-            {
-                switch (SortBy_ComboBox.SelectedItem)
-                {
-                    case "A-Z":
-
-                        break;
-                    case "Z-A":
-
-                        break;
-                    case "Ældste":
-
-                        break;
-                    case "Nyeste":
-
-                        break;
-                }
-            }
-        }
-
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
             Title_TextBox.IsReadOnly = true;
@@ -112,6 +90,12 @@ namespace Guldfeldt.View.Notes
 
 
             MessageBox.Show(" Ændring gemt. ");
+        }
+
+        private void SearchByKeyword_TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filterText = SearchByKeyword_TextBox.Text;
+            mvm.LoadNotesFromSearch(filterText);
         }
     }
 }

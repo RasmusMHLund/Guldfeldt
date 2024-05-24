@@ -26,10 +26,11 @@ namespace Guldfeldt.View
         LocationRepo lr = new LocationRepo();
 
 
-        public EditLocation()
+        public EditLocation(Location location)
         {
             InitializeComponent();
             DataContext = mvm;
+            mvm.SelectedLocation = location;
             ApplyHoverEffect(Save_Button, defaultbrush, hoverbrush);
             ApplyHoverEffect(Delete_Button, defaultbrush, hoverbrush);
             ApplyHoverEffect(Cancel_Button, defaultbrush, hoverbrush);
@@ -56,21 +57,19 @@ namespace Guldfeldt.View
 
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            Location location = new Location
-            {
-                Name = LocationName_TextBox.Text,
-                Address = LocationAddress_TextBox.Text,
-                IsSchool = IsSchool_CheckBox.IsChecked,
-                IsConstructionSite = IsConstructionSite_CheckBox.IsChecked,
-            };
-            lr.Update(location);
+            lr.Update(mvm.SelectedLocation);
+            MessageBox.Show(" Ændring gemt. ");
+            mvm.LoadLocationsFromDatabase();
+            Close();
         }
 
         private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             lr.Delete(mvm.SelectedLocation);
+            MessageBox.Show(" Lokation slettet. ");
             mvm.LoadLocationsFromDatabase();
+            Close();
         }
     }
 }

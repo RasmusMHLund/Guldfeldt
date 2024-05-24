@@ -37,14 +37,9 @@
 
     <Grid>
         <ListBox x:Name="NoteList_ListBox" HorizontalAlignment="Left" Height="430" Margin="26,52,0,0" VerticalAlignment="Top" Width="178" FontSize="14" Background="#FFEAEAEA" ItemsSource="{Binding Notes}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedNote}"/>
-        <TextBox x:Name="SearchByKeyword_TextBox" HorizontalAlignment="Left" Height="25" Margin="26,23,0,0" TextWrapping="Wrap" adorners:Watermark.Text="Søg...            🔍" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="106" VerticalContentAlignment="Center" FontSize="14" Background="#FFEAEAEA"/>
-        <ComboBox x:Name="SortBy_ComboBox" HorizontalAlignment="Left" Height="25" Margin="137,23,0,0" VerticalAlignment="Top" Width="67" SelectedIndex="0" FontSize="14" SelectionChanged="SortBy_ComboBox_SelectionChanged">
-            <ComboBoxItem Visibility="Collapsed" Content="Sortér"/>
-            <ComboBoxItem Content="Ældste"/>
-            <ComboBoxItem Content="Nyeste"/>
-            <ComboBoxItem Content="A-Z"/>
-            <ComboBoxItem Content="Z-A"/>
-        </ComboBox>
+        <TextBox x:Name="SearchByKeyword_TextBox" HorizontalAlignment="Left" Height="25" Margin="26,23,0,0" TextWrapping="Wrap" adorners:Watermark.Text="Søg...          🔍" adorners:Watermark.VisibleWhen="Empty" VerticalAlignment="Top" Width="100" VerticalContentAlignment="Center" FontSize="14" Background="#FFEAEAEA" TextChanged="SearchByKeyword_TextBox_TextChanged"/>
+        <ComboBox x:Name="SortBy_ComboBox" HorizontalAlignment="Left" Height="25" Margin="129,23,0,0" VerticalAlignment="Top" Width="75" FontSize="14" adorners:Watermark.Text="Sortér" adorners:Watermark.VisibleWhen="Empty" ItemsSource="{Binding SortNoteItems}" SelectedItem="{Binding SelectedSortNoteItem}"/>
+
         <Button x:Name="AddNote_Button"  HorizontalAlignment="Left" Height="25" Margin="26,487,0,0" VerticalAlignment="Top" Width="178" Content="Tilføj note" Template="{StaticResource MouseOverBackground}" FontSize="14" Background="#FF5E5B5B" Foreground="White" BorderBrush="#FF5E5B5B" Click="AddNote_Button_Click"/>
 
         <Grid HorizontalAlignment="Left" Height="460" Margin="226,52,0,0" VerticalAlignment="Top" Width="330" Background="#FFEAEAEA">
