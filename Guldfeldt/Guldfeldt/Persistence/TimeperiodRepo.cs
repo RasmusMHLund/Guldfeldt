@@ -11,7 +11,7 @@ namespace Guldfeldt.Persistence
 {
     public class TimeperiodRepo
     {
-        string? connectionString = "Data Source = 10.56.8.35; Initial Catalog = DB_2024_72; Persist Security Info=True;User ID = STUDENT_2024_72; Password=OPENDB_72;Encrypt=True;Trust Server Certificate=True";
+        string? connectionString = "Data Source=localhost\\SQLEXPRESS01;Integrated Security=True;Trust Server Certificate=True";
 
         private List<Timeperiod> Timeperiods;
         public TimeperiodRepo() 
